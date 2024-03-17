@@ -1,7 +1,8 @@
 #include <iostream>
 using namespace std;
-#include "date.cpp"
-#include "etudiant.cpp"
+//#include "date.cpp"
+//#include "etudiant.cpp"
+#include"promotion.cpp"
 int main()
 {
     /** test de la classe date: **/
@@ -17,12 +18,20 @@ int main()
 
 
     /**test de la classe etudiant**/
-    etudiant e("Mohamed","Bouafif","MohamedBouafif2020@gmail.com","14478956","EZF#54B",10.7);
+    /*etudiant e("Mohamed","Bouafif","MohamedBouafif2020@gmail.com","14478956","EZF#54B",10.7);
     e.afficher();
     etudiant e2;
     e2.saisir();
     e2.afficher();
     date d = e.getdate_de_naissance();
-    d.afficher();
+    d.afficher();*/
+    
+     /**test de la classe promotion **/
+    promotion promo ;
+    promo.saisir_promo();
+    promo.afficher_promo();
+    etudiant  a;
+    a=promo.majeur_promo();
+    a.afficher();
 
 }
