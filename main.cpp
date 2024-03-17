@@ -2,7 +2,8 @@
 using namespace std;
 //#include "date.cpp"
 //#include "etudiant.cpp"
-#include"promotion.cpp"
+//#include"promotion.cpp"
+#include"pfe.cpp"
 int main()
 {
     /** test de la classe date: **/
@@ -27,11 +28,16 @@ int main()
     d.afficher();*/
     
      /**test de la classe promotion **/
-    promotion promo ;
+   /* promotion promo ;
     promo.saisir_promo();
     promo.afficher_promo();
     etudiant  a;
     a=promo.majeur_promo();
-    a.afficher();
+    a.afficher();*/
+     /**test de la classe pfe **/
+    pfe pf ;
+    pf.saisir_pfe();
+    pf.afficher_pfe();
+
 
 }
