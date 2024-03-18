@@ -1,7 +1,7 @@
 #include "date.h"
-void date::afficher()
+void date::afficher(string msg)
 {
-    cout<<"La date est: \n";
+    cout<<msg;
     cout<<"Jour: "<<jour;
     cout<<endl;
     cout<<"Mois: "<<mois;
@@ -9,9 +9,9 @@ void date::afficher()
     cout<<"Annee: "<<annee;
     cout<<endl;
 }
-void date::saisir()
+void date::saisir(string msg)
 {
-    //cout<<"saisir la Date: "<<endl;
+    cout<<msg;
 
     do
     {
@@ -34,3 +34,17 @@ void date::saisir()
     cout<<"Annee: ";cin>>annee;
     cout<<endl;
 }
+
+
+/**function tri**/
+bool date:: compare(date d1, date d2)
+{
+    if(d1.annee == d2.annee)
+        if(d1.mois==d2.mois)
+            return d1.jour<=d2.jour;
+        else
+            return d1.mois<d2.mois;
+    else
+        return d1.annee<d2.annee;
+}
+
