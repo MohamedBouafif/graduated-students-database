@@ -1,5 +1,5 @@
 #include "etudiant.h"
-
+#include <algorithm>
 /**Constructeur**/
 etudiant::etudiant(string nom,string prenom,string mail,string CIN,string matricule_E,bool travaille,int jn,int mn,int an,int jd,int md,int ad,int jf,int mf,int af):
     date_de_naissance(jn,mn,an),date_debut(jd,md,ad),date_fin(jf,mf,af)
@@ -9,19 +9,21 @@ etudiant::etudiant(string nom,string prenom,string mail,string CIN,string matric
     this->mail=mail;
     this->CIN = CIN;
     this->matricule_E = matricule_E;
-    this->moyenne = moyenne;
+    //this->moyenne = moyenne;
     this->travaille = travaille;
     if(travaille)
     {
         char e;
         do
         {
+
             cout<<"Saisir le nom de l'entreprise que letudiant travaille\n";
             string nomE;
             cin>>nomE;
             societes.push_back(nomE);
             cout<<"Vous voulez ajouter d'autre(s)\n1:OUI\t2:NON";
             cin>>e;
+
         }while(e=='1');
     }
 
@@ -36,7 +38,7 @@ etudiant::etudiant(const etudiant& e)
     CIN = e.CIN;
     matricule_E = e.matricule_E;
 
-    moyenne = e.moyenne;
+    //moyenne = e.moyenne;
 
     travaille = e.travaille;
 
@@ -60,11 +62,14 @@ void etudiant::afficher()
     cout<<"Mail: "<<mail<<endl;
     cout<<"CIN: "<<CIN<<endl;
     cout<<"Matricule de l'etudiant: "<<matricule_E<<endl;
-    cout<<"La moyenne de l'etudiant durant ces 3 annees: \n"<<moyenne<<endl;
+    //cout<<"La moyenne de l'etudiant durant ces 3 annees: \n"<<moyenne<<endl;
     if(travaille)
     {
         cout<<"L'etudiant travaille \n";
-        cout<<"Il a travaillé recamment dans ces entreprises: \n";
+        cout<<"Il a travaille recamment dans ces entreprises: \n";
+
+        sort(societes.begin(),societes.end());
+
         for(int i = 0; i < (int) societes.size() ;i++)
         {
             cout<<societes[i]<<"\t";
@@ -73,8 +78,7 @@ void etudiant::afficher()
     }
     else cout<<"l'etudiant ne travaille pas encore \n";
 
-
-    date_de_naissance.afficher("La date de naissance de letudiant est:\n");
+    date_de_naissance.afficher("La date de naissance de letudiant est: \n");
     date_debut.afficher("La date de debut d'etude: \n");
     date_fin.afficher("La date de fin d'etude: \n");
 
@@ -86,7 +90,7 @@ void etudiant::afficher()
 /**METHODE SAISIR (ba3d bch na3mloulha surcharge par cout<<) **/
 void etudiant::saisir()
 {
-    cout<<"Saisir les donees de letudiant selon l'ordre suivant: \n";
+    cout<<"Saisir les donnes de letudiant selon l'ordre suivant: \n";
     cout<<"Nom: ";
     cin>>nom;
     cout<<"Prenom: ";
@@ -97,10 +101,10 @@ void etudiant::saisir()
     cin>>CIN;
     cout<<"Matricule: ";
     cin>>matricule_E;
-    cout<<"Moyenne: ";
-    cin>>moyenne;
+    //cout<<"Moyenne: ";
+    //cin>>moyenne;
 
-    cout<<"A il travaille ?\n1-OUI\t2-NON";
+    cout<<"A il travaille ?\n1-OUI\t2-NON\n";
     char e;
     cin>>e;
     if(e=='1')
@@ -115,7 +119,7 @@ void etudiant::saisir()
             cin>>s;
             societes.push_back(s);
             cout<<"Voulez_vous ajouter d'autre(s)";
-            cout<<"\n1-OUI\t2-NON";
+            cout<<"\n1-OUI\t2-NON\n";
             cin>>x;
         }while(x=='1');
     }
@@ -137,4 +141,45 @@ etudiant::~etudiant()
 int etudiant::taille()
 {
     return societes.size();
+}
+
+void etudiant::chercher_Societe(string societe)
+{
+    for(int  i = 0; i<(int)societes.size(); i++)
+    {
+        if(societes[i] == societe)
+        {
+            cout<<"Socite trouvee!";
+            return;
+        }
+    }
+    cout<<"Societe non trouvee\n";
+    return;
+}
+
+
+int etudiant::dure_etude()
+{
+
+    int x = date_fin.getannee() - date_debut.getannee();
+
+    if(x==0||x==1)
+    {
+        return 1;
+    }
+    else return x;
+}
+
+void etudiant::redouble()
+{
+    int periode = dure_etude();
+    if(periode>3)
+    {
+        int annes_redouble = periode - 3;
+        cout<<"L'etudiant a redouble "<<annes_redouble<<" annee(s)\n";
+    }
+    else
+    {
+        cout<<"L'etudiant n'a pas redouble aucune annee a notre universite\n";
+    }
 }
