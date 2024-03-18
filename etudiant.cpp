@@ -1,6 +1,8 @@
 #include "etudiant.h"
 
-etudiant::etudiant(string nom,string prenom,string mail,string CIN,string matricule_E,float moyenne,bool travaille)
+/**Constructeur**/
+etudiant::etudiant(string nom,string prenom,string mail,string CIN,string matricule_E,bool travaille,int jn,int mn,int an,int jd,int md,int ad,int jf,int mf,int af):
+    date_de_naissance(jn,mn,an),date_debut(jd,md,ad),date_fin(jf,mf,af)
 {
     this->nom = nom;
     this->prenom = prenom;
@@ -9,17 +11,48 @@ etudiant::etudiant(string nom,string prenom,string mail,string CIN,string matric
     this->matricule_E = matricule_E;
     this->moyenne = moyenne;
     this->travaille = travaille;
+    if(travaille)
+    {
+        char e;
+        do
+        {
+            cout<<"Saisir le nom de l'entreprise que letudiant travaille\n";
+            string nomE;
+            cin>>nomE;
+            societes.push_back(nomE);
+            cout<<"Vous voulez ajouter d'autre(s)\n1:OUI\t2:NON";
+            cin>>e;
+        }while(e=='1');
+    }
 
-    cout<<"Saisir la date de naissance de letudiant\n";
-    date_de_naissance.saisir();
-
-    cout<<"Saisir la date de debut d'etude:\n";
-    date_debut.saisir();
-
-    cout<<"Saisir la date de fin d'etude:\n";
-    date_fin.saisir();
 }
 
+/**Constructeur par recopie**/
+etudiant::etudiant(const etudiant& e)
+{
+    nom = e.nom;
+    prenom = e.prenom;
+    mail = e.mail;
+    CIN = e.CIN;
+    matricule_E = e.matricule_E;
+
+    moyenne = e.moyenne;
+
+    travaille = e.travaille;
+
+    for(int i = 0; i < (int)e.societes.size() ; i++)
+    {
+        societes.push_back(e.societes[i]);
+    }
+
+    date_debut = e.date_debut;
+    date_fin = e.date_fin;
+    date_de_naissance = e.date_de_naissance;
+
+}
+
+
+/**AFFICHER: (ba3d bch na3mloulha surcharche ta3 cin>> ) **/
 void etudiant::afficher()
 {
     cout<<"Nom: "<<nom<<endl;
@@ -29,31 +62,79 @@ void etudiant::afficher()
     cout<<"Matricule de l'etudiant: "<<matricule_E<<endl;
     cout<<"La moyenne de l'etudiant durant ces 3 annees: \n"<<moyenne<<endl;
     if(travaille)
+    {
         cout<<"L'etudiant travaille \n";
+        cout<<"Il a travaillé recamment dans ces entreprises: \n";
+        for(int i = 0; i < (int) societes.size() ;i++)
+        {
+            cout<<societes[i]<<"\t";
+        }
+        cout<<endl;
+    }
     else cout<<"l'etudiant ne travaille pas encore \n";
-    cout<<"La date de naissance de letudiant est:\n";
-    date_de_naissance.afficher();
-    cout<<"La date de debut d'etude: \n";
-    date_debut.afficher();
-    cout<<"La date de fin d'etude: \n";
-    date_fin.afficher();
+
+
+    date_de_naissance.afficher("La date de naissance de letudiant est:\n");
+    date_debut.afficher("La date de debut d'etude: \n");
+    date_fin.afficher("La date de fin d'etude: \n");
+
+
+
 }
+
+
+/**METHODE SAISIR (ba3d bch na3mloulha surcharge par cout<<) **/
 void etudiant::saisir()
 {
     cout<<"Saisir les donees de letudiant selon l'ordre suivant: \n";
-    cout<<"Nom: ";cin>>nom;
-    cout<<"Prenom: ";cin>>prenom;
-    cout<<"Mail: ";cin>>mail;
-    cout<<"CIN: ";cin>>CIN;
-    cout<<"Matricule: ";cin>>matricule_E;
-    cout<<"Moyanne: ";cin>>moyenne;
+    cout<<"Nom: ";
+    cin>>nom;
+    cout<<"Prenom: ";
+    cin>>prenom;
+    cout<<"Mail: ";
+    cin>>mail;
+    cout<<"CIN: ";
+    cin>>CIN;
+    cout<<"Matricule: ";
+    cin>>matricule_E;
+    cout<<"Moyenne: ";
+    cin>>moyenne;
 
-    cout<<"Saisir la date de naissance de letudiant\n";
-    date_de_naissance.saisir();
+    cout<<"A il travaille ?\n1-OUI\t2-NON";
+    char e;
+    cin>>e;
+    if(e=='1')
+    {
+        travaille = 1;
+        cout<<"Saisir les entreprises que l'etudiant a travaille\n";
+        char x;
+        do
+        {
+            cout<<"Nom entreprise: ";
+            string s;
+            cin>>s;
+            societes.push_back(s);
+            cout<<"Voulez_vous ajouter d'autre(s)";
+            cout<<"\n1-OUI\t2-NON";
+            cin>>x;
+        }while(x=='1');
+    }
+    else travaille = 0;
 
-    cout<<"Saisir la date de debut d'etude:\n";
-    date_debut.saisir();
 
-    cout<<"Saisir la date de fin d'etude:\n";
-    date_fin.saisir();
+    date_de_naissance.saisir("Saisir la date de naissance de letudiant\n");
+    date_debut.saisir("Saisir la date de debut d'etude:\n");
+    date_fin.saisir("Saisir la date de fin d'etude:\n");
+
+}
+
+/**Destructeur**/
+etudiant::~etudiant()
+{
+    societes.clear();
+}
+
+int etudiant::taille()
+{
+    return societes.size();
 }
