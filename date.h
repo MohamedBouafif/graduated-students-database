@@ -15,9 +15,11 @@ public:
     void setjour(int jour){this->jour=jour;}
     void setmois(int mois){this->mois=mois;}
     void setannee(int annee){this->annee=annee;}
-    void afficher();
-    void saisir();
+    void afficher(string ="");
+    void saisir(string="");
 
+    /**Methode tri des dates**/
+    bool compare(date,date);
 
 };
 
