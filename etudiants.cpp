@@ -55,7 +55,7 @@ void etudiants::remplir()
         else break;
         e->saisir();
         tab.push_back(e);
-        cout<<"Voulez-vous ajouter?\n";
+        cout<<"Voulez-vous rajouter dautres etudiants?\n";
         cout<<"1:Oui\t2:Non\n";
         cin>>rep;
     }
