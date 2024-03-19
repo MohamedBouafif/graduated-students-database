@@ -4,6 +4,7 @@ using namespace std;
 #include "etudiant.cpp"
 #include "etudinat_ing.cpp"
 #include "etudiant_master.cpp"
+#include "etudiants.cpp"
 int main()
 {
     /** test de la classe date: **/
@@ -37,13 +38,19 @@ int main()
     //ALL good
 
     /** test de classe etudiant master**/
-    etudiant_master e;
+    /*etudiant_master e;
     e.saisir();
     e.afficher();
     etudiant_master e1(e);
-    e1.afficher();
+    e1.afficher();*/
     //ALL GOOD;
     
-
+    
+    /**test de classe etudaints qui englobe TOUT!!**/
+    /**Vous pouvez tester seullement ca**/
+    etudiants e;
+    e.remplir();
+    e.afficher();
+//ALL GOOD!
 
 }
