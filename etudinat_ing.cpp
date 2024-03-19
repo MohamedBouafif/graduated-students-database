@@ -3,6 +3,8 @@
 etudiant_ing::etudiant_ing(string section,string nom,string prenom,string mail,string CIN,string matricule_E,bool travaille,int jn,int mn,int an,int jd,int md,int ad,int jf,int mf,int af):etudiant(nom,prenom,mail,CIN,matricule_E,travaille,jn,mn,an,jd,md,ad,jf,mf,af)
 {
     this->section = section;
+    moyenne_general = calcul_moyenne_general();
+
 }
 
 /**CONST PAR RECOPIE**/
@@ -18,6 +20,7 @@ etudiant_ing::etudiant_ing(const etudiant_ing& e):etudiant(e)
     {
         moyennes.push_back(e.moyennes[i]);
     }
+    moyenne_general = calcul_moyenne_general();
 }
 
 /**DES**/
@@ -61,6 +64,7 @@ void etudiant_ing::afficher()
     }
 
     cout<<endl;
+    cout<<"Moyenne general du cycle = "<<moyenne_general<<endl;
 }
 
 
@@ -89,6 +93,7 @@ void etudiant_ing::saisir()
         cin>>moy;
         moyennes.push_back(moy);
     }
+    moyenne_general = calcul_moyenne_general();
 }
 
 
@@ -128,4 +133,13 @@ void etudiant_ing::chercher_classe(string c)
     }
     cout<<"Classe non trouve!\n";
     return ;
+}
+float etudiant_ing::calcul_moyenne_general()
+{
+    float moyenne = 0;
+    for(int i = 0;i<(int)moyennes.size();i++)
+    {
+        moyenne += moyennes[i];
+    }
+    return moyenne/moyennes.size();
 }
