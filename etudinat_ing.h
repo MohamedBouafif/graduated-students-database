@@ -9,6 +9,7 @@ class etudiant_ing : public etudiant
     vector<string> classes;
     string section;
     vector<float> moyennes;
+    float moyenne_general;
 
 public:
 
@@ -20,7 +21,7 @@ public:
     /**get&set**/
     void setSection(string section){this->section = section;}
     string getsection(void){return section;}
-
+    float getmoyenne_general(){return moyenne_general;}
 
     void chercher_classe(string);
     void afficher_moyennes();
@@ -31,6 +32,8 @@ public:
     void afficher();
     void saisir();
 
+
+    float calcul_moyenne_general();
 
 };
 
