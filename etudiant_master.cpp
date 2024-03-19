@@ -6,7 +6,7 @@ etudiant_master::etudiant_master(string filier_licence,float note_pfe_licence,st
     this->filiere_licence = filiere_licence;
     this->filiere_master = filiere_master;
     this->note_pfe_licence =  note_pfe_licence;
-
+    moyenne_general = calcul_moyenne_general();
 }
 
 etudiant_master::etudiant_master(const etudiant_master &e):etudiant(e)
@@ -19,7 +19,7 @@ etudiant_master::etudiant_master(const etudiant_master &e):etudiant(e)
     {
         moyennes.push_back(e.moyennes[i]);
     }
-
+    moyenne_general = calcul_moyenne_general();
 }
 etudiant_master::~etudiant_master()
 {
@@ -50,7 +50,7 @@ void etudiant_master:: saisir()
         cin>>moy;
         moyennes.push_back(moy);
     }
-
+    moyenne_general = calcul_moyenne_general();
 }
 
 void etudiant_master::afficher()
@@ -69,4 +69,14 @@ void etudiant_master::afficher()
         cout<<moyennes[i]<<"\t";
     }
     cout<<endl;
+    cout<<"Moyenne general de cycle = "<<moyenne_general<<endl;
+}
+float etudiant_master::calcul_moyenne_general()
+{
+    float moyenne = 0;
+    for(int i = 0;i<(int)moyennes.size();i++)
+    {
+        moyenne += moyennes[i];
+    }
+    return moyenne/moyennes.size();
 }
