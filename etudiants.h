@@ -4,8 +4,12 @@
 #include "etudiant.h"
 class etudiants
 {
+    friend class pfe;
+    friend class entreprise;
     vector<etudiant*> tab;
+
 public:
+
     etudiants();
     etudiants(const etudiants&);
     ~etudiants();
