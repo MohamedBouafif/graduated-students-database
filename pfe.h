@@ -1,34 +1,36 @@
 #ifndef PFE_H_INCLUDED
 #define PFE_H_INCLUDED
-#include "etudiant.cpp"
-#include<vector>
+#include "etudiants.h"
+#pragma once
 class pfe
 {
-    string sujet_pfe ;
-    string entreprise_de_stage ;
-    float note_atribuee ;
-    vector <etudiant> resp;
-public :
-    pfe() ;
-    pfe (string , string , float );
 
+    string sujet_pfe;
+    string entreprise_stage_pfe;
+    float note_attribue;
+    etudiants Etudiants;
+public:
+    /**Const(s) & Dest**/
+    pfe(string="",string="",float=0);
+    ~pfe();
+    pfe(const pfe&);
 
-    string get_sujet_pfe(){return sujet_pfe;};
-    string get_entreprisedestage(){return entreprise_de_stage;};
-    float get_note_attribuee(){return note_atribuee;};
+    /**Getteur(s) & setteur(s)**/
+    string getsujet_pfe(){return sujet_pfe;}
+    string getentreprise_stage_pfe(){return entreprise_stage_pfe;}
+    float getnote_attribue(){return note_attribue;}
+    etudiants getetudiants(){return Etudiants;}
 
-    void set_sujet__pfe(string sujet_pfe){this->sujet_pfe=sujet_pfe;};
-    void set_entreprise_de_stage(string entreprise_de_stage){this ->entreprise_de_stage=entreprise_de_stage;};
-    void set_note_attribuee(float note_atribuee){this->note_atribuee=note_atribuee;};
+    void setsuhet_pfe(string sujet_pfe){this->sujet_pfe = sujet_pfe;}
+    void setentreprise_stage_pfe(string entreprise_stage_pfe){this->entreprise_stage_pfe = entreprise_stage_pfe;}
+    void setnote_attribue(float note_attribue){this->note_attribue = note_attribue;}
+    //void setetudiants(etudiants F){E(F);}
 
-    void ajouter_etudiant() ;
-    void saisir_pfe();
-    void afficher_pfe();
-
-
-
-
+    /**Afficher & saisir**/
+    void afficher();
+    void saisir();
 
 };
+
 
 #endif // PFE_H_INCLUDED
