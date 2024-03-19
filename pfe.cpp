@@ -1,55 +1,47 @@
 #include "pfe.h"
-pfe::pfe()
+pfe::pfe(string sujet_pfe, string entreprise_stage_pfe, float note_attribue)
 {
-    sujet_pfe="";
-    entreprise_de_stage="";
-    note_atribuee=0.0;
-
-
+    this->sujet_pfe = sujet_pfe;
+    this->entreprise_stage_pfe = entreprise_stage_pfe;
+    this->note_attribue = note_attribue;
 }
-pfe::pfe(string sujet_pfe ,string entreprise_de_stage ,float note_atribuee)
-{
- this->sujet_pfe=sujet_pfe;
- this->entreprise_de_stage=entreprise_de_stage;
- this->note_atribuee=note_atribuee;
 
+pfe::pfe(const pfe& p)
+{
+    sujet_pfe = p.sujet_pfe;
+    entreprise_stage_pfe = p.entreprise_stage_pfe;
+    note_attribue  = p.note_attribue;
+    Etudiants = p.Etudiants;
 }
-void pfe::ajouter_etudiant()
-{   int n ;
-    cout <<"entrer le nombre des etudiants responslabes de pfe"<<endl;
-    cin >>n ;
-    while (n>2)
-        {cout <<"le nombre d'etudiants doit etre egal 1 ou 2 "<<endl ;
-        cout << "veuillez reentrer le nombre d'etudiants "<<endl ;
-        cin >> n ; }
-    for (int i=0 ; i<n ;i++)
-        {
-             etudiant e ;
-             e.saisir();
-             resp.push_back(e);
 
-        }
-
-    }
-void pfe::saisir_pfe()
+pfe::~pfe()
 {
-    cout <<"entrer le sujet de pfe" << endl;
-    cin>>sujet_pfe;
-    cout <<"entrer l'entreprise du stage de pfe " <<endl ;
-    cin>> entreprise_de_stage;
-    cout<<"entrer la note atribuee au pfe " <<endl ;
-    cin >> note_atribuee ;
-    ajouter_etudiant();
+    //Destructeur vide
 }
-void pfe::afficher_pfe()
+
+void pfe::saisir()
 {
-    cout<<"************affichage pfe****************"<<endl ;
-    cout << "le sujet de pfe est: "<<sujet_pfe<<endl ;
-    cout <<"l'entreprise de stage est: "<<entreprise_de_stage<<endl;
-    cout <<"la note attribuee est: "<<note_atribuee<<endl ;
-    for (int i=0 ; i<resp.size(); i++)
+    cout<<"Saisir les donnees de pfe selon l'ordre suivant:\n";
+    cout<<"Sujet pfe: "<<endl;
+    getline(cin,sujet_pfe);
+    cout<<"Entreprise de stage de pfe: "<<endl;
+    getline(cin,entreprise_stage_pfe);
+
+    cout<<"Note attribue a la pfe: "<<endl;
+    cin>>note_attribue;
+    cout<<"Saisir les Etudiants qui ont travaille sur cette PFE: ";
+    Etudiants.remplir();
+}
+
+void pfe::afficher()
+{
+    cout<<"\n***************************************"<<endl;
+    cout<<"Sujet pfe: "<<sujet_pfe<<endl;
+    cout<<"Entreprise de stage de pfe: "<<entreprise_stage_pfe<<endl;
+    cout<<"Note attribue  a la pfe: "<<note_attribue<<endl;
+    cout<<"Les etudiants qui ont travaille  sur cette pfe\n";
+    for(int i = 0; i < (int)Etudiants.tab.size(); i++)
     {
-        resp[i].afficher();
+        cout<<i+1<<": "<<Etudiants.tab[i]->getnom()<<" "<<Etudiants.tab[i]->getprenom()<<" son identifiant est: "<<Etudiants.tab[i]->getmatricule_E()<<endl;
     }
 }
-
