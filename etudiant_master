@@ -7,6 +7,8 @@ class etudiant_master : public etudiant
     float note_pfe_licence;
     string filiere_master;
     vector<float> moyennes;
+    float moyenne_general;
+
 public:
     /**Const(s) & Dest**/
     etudiant_master(string="",float=0,string="",string="",string="",string="",string="",string="",bool =0,int=0 ,int =0,int =0,int=0,int=0 ,int=0 ,int=0,int =0,int=0);
@@ -18,6 +20,7 @@ public:
     string getfiliere_licence(){return filiere_licence;}
     float getnote_pfe_licence(){return note_pfe_licence;}
     string getfiliere_master(){return filiere_master;}
+    float getmoyenne_general(){return moyenne_general;}
 
     void setfiliere_licence(string filiere_licence){this->filiere_licence = filiere_licence;}
     void setnote_pfe_licence(float note_pfe_licence){this->note_pfe_licence = note_pfe_licence;}
@@ -27,6 +30,8 @@ public:
     /** Les methodes redefinies**/
     void saisir();
     void afficher();
+
+    float calcul_moyenne_general();
 
 
 };
