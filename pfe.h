@@ -24,7 +24,7 @@ public:
     void setsuhet_pfe(string sujet_pfe){this->sujet_pfe = sujet_pfe;}
     void setentreprise_stage_pfe(string entreprise_stage_pfe){this->entreprise_stage_pfe = entreprise_stage_pfe;}
     void setnote_attribue(float note_attribue){this->note_attribue = note_attribue;}
-    //void setetudiants(etudiants F){E(F);}
+    
 
     /**Afficher & saisir**/
     void afficher();
