@@ -5,6 +5,7 @@ using namespace std;
 #include "etudinat_ing.cpp"
 #include "etudiant_master.cpp"
 #include "etudiants.cpp"
+#include "pfe.cpp"
 int main()
 {
     /** test de la classe date: **/
@@ -44,13 +45,22 @@ int main()
     etudiant_master e1(e);
     e1.afficher();*/
     //ALL GOOD;
-    
-    
-    /**test de classe etudaints qui englobe TOUT!!**/
-    /**Vous pouvez tester seullement ca**/
-    etudiants e;
+
+    /**TEST DE classe etudiantS **/
+    /*etudiants e;
     e.remplir();
     e.afficher();
-//ALL GOOD!
+    //ALL GOOD;*/
 
+    
+    /**Test de classe pfe**/
+    pfe p;
+    p.saisir();
+    p.afficher();
+    pfe p1(p);//test de constructeur par recopie
+    p1.afficher();
+
+    etudiants e = p1.getetudiants(); //test de getteur des etudiants qui ont travaille dans une pfe donné
+    e.afficher();
+    //ALL GOOD ! 
 }
