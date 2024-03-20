@@ -1,11 +1,12 @@
 #include <iostream>
 using namespace std;
-#include "date.cpp"
 #include "etudiant.cpp"
-#include "etudinat_ing.cpp"
-#include "etudiant_master.cpp"
+//#include "etudiant_ing.cpp"
 #include "etudiants.cpp"
+#include "etudiant_master.cpp"
 #include "pfe.cpp"
+//#include "promotion_master.cpp"
+#include "promotion_ing.cpp"
 int main()
 {
     /** test de la classe date: **/
@@ -54,7 +55,7 @@ int main()
 
     
     /**Test de classe pfe**/
-    pfe p;
+   /* pfe p;
     p.saisir();
     p.afficher();
     pfe p1(p);//test de constructeur par recopie
@@ -62,5 +63,23 @@ int main()
 
     etudiants e = p1.getetudiants(); //test de getteur des etudiants qui ont travaille dans une pfe donné
     e.afficher();
-    //ALL GOOD ! 
+    //ALL GOOD ! */
+       /**Test de classe promotion_mast **/
+      /* promotion_master p ;
+       p.saisir_promo_mast() ;
+       p.afficher_promo_mast_triee() ;
+       etudiant_master e ;
+       e = p.majeur_promo_mast();
+       e.afficher();*/
+
+
+       /**Test de classe promotion_ing+ **/
+       promotion_ing p ;
+       p.saisir_promo_ing() ;
+       p.afficher_promo_ing_triee() ;
+       etudiant_ing e ;
+     cout<<"***************affichage majeur promo ****************"<<endl ; 
+       e = p.majeur_promo_ing ();
+       e.afficher();
+
 }
