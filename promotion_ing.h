@@ -11,9 +11,9 @@ class promotion_ing
    vector <etudiant_ing> etudiants_ing ;
    int nb_etudiants_ing ;
    public :
-       promotion_ing ();
-       promotion_ing (date,int ,int);
-       ~promotion_ing(){};
+       promotion_ing (int=0,int=0, int=0,int=0,int=0);
+       pomotion_ing(const promotion_ing& );
+       ~promotion_ing();
        void saisir_promo_ing();
        void afficher_promo_ing();
        void afficher_promo_ing_triee();
