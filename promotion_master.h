@@ -10,9 +10,9 @@ class promotion_master
    vector <etudiant_master> etudiants_master ;
    int nb_etudiants_master ;
    public :
-       promotion_master ();
-       promotion_master (date,int ,int);
-       ~promotion_master (){};
+       promotion_master (int=0,int=0,int=0,int=0,int=0);
+       promotion_master (const promotion_master& );
+       ~promotion_master ();
        void saisir_promo_mast();
        void afficher_promo_mast();
        void afficher_promo_mast_triee();
@@ -21,6 +21,7 @@ class promotion_master
 
 
 };
+
 
 
 #endif // PROMOTION_MASTER_H_INCLUDED
