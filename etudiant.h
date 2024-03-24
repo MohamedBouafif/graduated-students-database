@@ -10,11 +10,14 @@ using namespace std;
 
 class etudiant
 {
+    friend class entreprise;
+
 protected:
 
     string nom,prenom,mail,CIN,matricule_E;
-    //float moyenne;
+
     bool travaille;
+
     vector<string> societes;
 
     date date_de_naissance;
@@ -35,9 +38,7 @@ public:
     string getmail(){return mail;}
     string getCIN(){return CIN;}
     string getmatricule_E(){return matricule_E;}
-
-
-    //float getmoyenne(){return moyenne;}
+    vector<string> getsocietes(){return societes;}
 
 
     date getdate_de_naissance(){return date_de_naissance;}
@@ -53,12 +54,12 @@ public:
     void setmatricule_E(string matricule_E){this->matricule_E=matricule_E;}
     void setdate_de_naissance(date d){this->date_de_naissance.setjour(d.getjour());this->date_de_naissance.setmois(d.getmois());this->date_de_naissance.setannee(d.getannee());}
     void settravaille(bool travaille){this->travaille=travaille;}
-    //void setmoyenne(float moyenne){this->moyenne=moyenne;}
+
     void setdate_debut(date d){this->date_debut.setjour(d.getjour());this->date_debut.setmois(d.getmois());this->date_debut.setannee(d.getannee());}
     void setdate_fin(date d){this->date_fin.setjour(d.getjour());this->date_fin.setmois(d.getmois());this->date_fin.setannee(d.getannee());}
 
 
-    void chercher_Societe(string);
+    bool chercher_Societe(string);
 
     int taille();
 
@@ -66,9 +67,15 @@ public:
 
     void redouble();//afficher si letudiant a redoublé au moins une annee ou non
 
+
 /*************(CES METHODES SONT REDEFINIES)*********************/
     virtual void afficher()=0;
     virtual void saisir()=0;
+
+/**************Surcharge des operateurs**************************/
+
+    friend ostream& operator<<(ostream&,etudiant&);
+    friend istream& operator>>(istream&,etudiant&);
 
 
 };
