@@ -143,18 +143,18 @@ int etudiant::taille()
     return societes.size();
 }
 
-void etudiant::chercher_Societe(string societe)
+bool etudiant::chercher_Societe(string societe)
 {
     for(int  i = 0; i<(int)societes.size(); i++)
     {
         if(societes[i] == societe)
         {
             cout<<"Socite trouvee!";
-            return;
+            return 1;
         }
     }
     cout<<"Societe non trouvee\n";
-    return;
+    return 0;
 }
 
 
@@ -182,4 +182,76 @@ void etudiant::redouble()
     {
         cout<<"L'etudiant n'a pas redouble aucune annee a notre universite\n";
     }
+}
+ostream& operator<< (ostream& out, etudiant& etd)
+{
+    out<<"Nom: "<<etd.nom<<endl;
+    out<<"Prenom: "<<etd.prenom<<endl;
+    out<<"Mail: "<<etd.mail<<endl;
+    out<<"CIN: "<<etd.CIN<<endl;
+    out<<"Matricule de l'etudiant: "<<etd.matricule_E<<endl;
+    //cout<<"La moyenne de l'etudiant durant ces 3 annees: \n"<<moyenne<<endl;
+    if(etd.travaille)
+    {
+        out<<"L'etudiant travaille \n";
+        out<<"Il a travaille recamment dans ces entreprises: \n";
+
+        sort(etd.societes.begin(),etd.societes.end());
+
+        for(int i = 0; i < (int) etd.societes.size() ;i++)
+        {
+            out<<etd.societes[i]<<"\t";
+        }
+        out<<endl;
+    }
+    else out<<"l'etudiant ne travaille pas encore \n";
+
+    etd.date_de_naissance.afficher("La date de naissance de letudiant est: \n");
+    etd.date_debut.afficher("La date de debut d'etude: \n");
+    etd.date_fin.afficher("La date de fin d'etude: \n");
+    return out;
+}
+
+istream& operator>> (istream& in, etudiant& etd)
+{
+    cout<<"Saisir les donnes de letudiant selon l'ordre suivant: \n";
+    cout<<"Nom: ";
+    in>>etd.nom;
+    cout<<"Prenom: ";
+    in>>etd.prenom;
+    cout<<"Mail: ";
+    in>>etd.mail;
+    cout<<"CIN: ";
+    in>>etd.CIN;
+    cout<<"Matricule: ";
+    in>>etd.matricule_E;
+    //cout<<"Moyenne: ";
+    //cin>>moyenne;
+
+    cout<<"A il travaille ?\n1-OUI\t2-NON\n";
+    char e;
+    in>>e;
+    if(e=='1')
+    {
+        etd.travaille = 1;
+        cout<<"Saisir les entreprises que l'etudiant a travaille\n";
+        char x;
+        do
+        {
+            cout<<"Nom entreprise: ";
+            string s;
+            in>>s;
+            etd.societes.push_back(s);
+            cout<<"Voulez_vous ajouter d'autre(s)";
+            cout<<"\n1-OUI\t2-NON\n";
+            in>>x;
+        }while(x=='1');
+    }
+    else etd.travaille = 0;
+
+
+    etd.date_de_naissance.saisir("Saisir la date de naissance de letudiant\n");
+    etd.date_debut.saisir("Saisir la date de debut d'etude:\n");
+    etd.date_fin.saisir("Saisir la date de fin d'etude:\n");
+    return in;
 }
