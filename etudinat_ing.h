@@ -5,11 +5,14 @@
 
 class etudiant_ing : public etudiant
 {
+    friend class entreprise;
+
 
     vector<string> classes;
     string section;
     vector<float> moyennes;
     float moyenne_general;
+
 
 public:
 
@@ -34,6 +37,8 @@ public:
 
 
     float calcul_moyenne_general();
+    friend ostream& operator<<(ostream&, etudiant_ing&);
+    friend istream& operator>>(istream&, etudiant_ing&);
 
 };
 
