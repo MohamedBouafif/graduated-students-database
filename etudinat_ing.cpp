@@ -134,6 +134,7 @@ void etudiant_ing::chercher_classe(string c)
     cout<<"Classe non trouve!\n";
     return ;
 }
+
 float etudiant_ing::calcul_moyenne_general()
 {
     float moyenne = 0;
@@ -142,4 +143,61 @@ float etudiant_ing::calcul_moyenne_general()
         moyenne += moyennes[i];
     }
     return moyenne/moyennes.size();
+}
+
+
+ostream& operator<<(ostream& out, etudiant_ing& etd)
+{
+    etudiant* e = &etd;
+    out<<*e;
+    out<<"Section: "<<etd.section<<endl;
+
+
+    out<<"Affichage des classes durant ses annees detudes:\n";
+    for(int i = 0;i < (int)etd.classes.size();i++)
+    {
+        out<<etd.classes[i]<<"\t";
+    }
+
+    out<<endl;
+
+
+    out<<"Affichage des moyennes durant ses annees detudes:\n";
+    for(int i = 0; i<(int)etd.moyennes.size(); i++)
+    {
+        out<<etd.moyennes[i]<<"\t";
+    }
+
+    out<<endl;
+    out<<"Moyenne general du cycle = "<<etd.moyenne_general<<endl;
+    return out;
+}
+
+istream& operator>>(istream& in, etudiant_ing& etd)
+{
+    etudiant* e = &etd;
+    in>>*e;
+    cout<<"Saisir la section: "<<endl;
+    in.ignore();
+    getline(in,etd.section);
+
+    int periode = etd.dure_etude();
+
+    cout<<"Saisir les classes durant ces annes detudes\n";
+    for(int i = 0;i<periode;i++)
+    {
+        string c;
+        getline(in,c);
+        etd.classes.push_back(c);
+    }
+
+    cout<<"Saisir les moyennes durant ces annes detudes\n";
+    for(int i = 0; i < periode;i++)
+    {
+        float moy;
+        in>>moy;
+        etd.moyennes.push_back(moy);
+    }
+    etd.moyenne_general = etd.calcul_moyenne_general();
+    return in;
 }
