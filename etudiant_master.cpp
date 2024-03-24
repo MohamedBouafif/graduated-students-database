@@ -80,3 +80,49 @@ float etudiant_master::calcul_moyenne_general()
     }
     return moyenne/moyennes.size();
 }
+
+ostream& operator<<(ostream& out, etudiant_master& etd)
+{
+    etudiant* e = &etd;
+    out<<*e;
+    out<<"Filiere licence: ";
+    out<<etd.filiere_licence<<endl;
+    out<<"Filiere master: ";
+    out<<etd.filiere_master<<endl;
+    out<<"Note pfe licence: ";
+    out<<etd.note_pfe_licence<<endl;
+
+    out<<"Moyennes durant ses annees detudes:\n";
+    for(int i = 0; i<(int)etd.moyennes.size(); i++)
+    {
+        out<<etd.moyennes[i]<<"\t";
+    }
+    out<<endl;
+    out<<"Moyenne general de cycle = "<<etd.moyenne_general<<endl;
+    return out;
+}
+
+istream& operator>>(istream& in, etudiant_master& etd)
+{
+    etudiant*e = &etd;
+    in>>*e;
+    cout<<"Filiere licence: "<<endl;
+    in.ignore();
+    getline(cin,etd.filiere_licence);
+    cout<<"Filiere master: \n";
+    in>>etd.filiere_master;
+    cout<<"Note pfe licence: \n";
+    in.ignore();
+    in>>etd.note_pfe_licence;
+
+    int periode = etd.dure_etude();
+    cout<<"Notes durant ces annees d'etudes:\n";
+    for(int i = 0; i < periode;i++)
+    {
+        float moy;
+        in>>moy;
+        etd.moyennes.push_back(moy);
+    }
+    etd.moyenne_general = etd.calcul_moyenne_general();
+    return in;
+}
