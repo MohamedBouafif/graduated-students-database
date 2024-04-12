@@ -1,68 +1,53 @@
 #include "promotion.h"
-promotion :: promotion (date date_graduation , int num_promo , int nb_etudiants)
+//constructeur
+promotion :: promotion (int nb_etudiants_total ,int nb_etudiants_ing,int nb_etudiants_master, int jm,int mm,int am,int ji,int mi, int ai,int num_promo_ing,int num_promo_master):
+    promotion_master(num_promo_master, nb_etudiants_master, jm, mm , am),promotion_ing(num_promo_ing, nb_etudiants_ing, ji,mi,ai)
 {
-    this -> date_graduation = date_graduation ;
-    this->num_promo = num_promo;
-    this->nb_etudiants=nb_etudiants ;
+    this->nb_etudiants_total=nb_etudiants_total;
+
 }
-void promotion ::ajouter_etudiant(etudiant e)
-{
-    etud_de_promo.push_back(e);
-}
+//constructeur par recopie
+ promotion::promotion (const promotion& p) :promotion_master(p) ,promotion_ing(p)
+ {
+    this->nb_etudiants_total=nb_etudiants_total;
+ }
+
 void promotion::saisir_promo()
 {
-    cout << "entrer le numero de promotion: "<<endl ;
-    cin >>num_promo;
-    cout << "entrer la  date de graduation de cette promo: "<< endl ;
-    date_graduation.saisir();
-    cout <<"entrer le nombres d'etudiants: "<<endl ;
-    cin >> nb_etudiants ;
+    cout<<"*************saisie de la promotion master*****************"<<endl;
+    saisir_promo_mast();
+    cout<<"*************saisie de la promotion ingenieur**************"<<endl;
+    saisir_promo_ing();
+    nb_etudiants_total=nb_etudiants_ing+nb_etudiants_master;
 
-    for (int i=0 ; i< nb_etudiants; i++)
-    {
-        etudiant e ;
-        e.saisir();
-        ajouter_etudiant(e);
-    }
 }
+
+
 void promotion::afficher_promo()
 {
-    cout <<"*************Affichage de promotion***********"<<endl ;
-    cout <<"le numero de promotion est: " << num_promo<<endl ;
-    cout <<"la date de graduation est: ";
-    date_graduation.afficher();
-    cout << "le nombres d'etudiants dans cette promotion est: "<< nb_etudiants<<endl ;
-    for (int i=0 ; i<nb_etudiants;i++)
-    {
-        etud_de_promo[i].afficher();
-    }
+
+    cout <<"***********************AFFICHAGE DE LA PROMOTION************"<<endl ;
+    cout <<" nombre total des etudiants: "<<nb_etudiants_total<<endl ;
+    afficher_promo_ing();
+    afficher_promo_mast();
+
 
 }
-etudiant  promotion::majeur_promo()
-{    etudiant e ;
-    float maxi ;
-    e= etud_de_promo[0];
-    maxi = etud_de_promo[0].getmoyenne();
-    for (int i=1; i<nb_etudiants ; i++)
+float promotion:: pourcentage ()
+  {
+    int e;
+    cout <<"Vous voulez obtenir le pourcenatge de \n1:etudiants master\t2:etudiants ingenieurs";
+    cin>>e;
+    while((e==1)||(e==2))
     {
-        if( maxi < etud_de_promo[i].getmoyenne())
-            {maxi = etud_de_promo[i].getmoyenne();
-            e=etud_de_promo[i];}
-    }
- return e ;
+        if (nb_etudiants_total==0)
+            return 0;
+        else
+        {if (e==2)
+            return (nb_etudiants_ing*100)/nb_etudiants_total;
+        else
+          return (nb_etudiants_master*100)/nb_etudiants_total;}
 
-}
-etudiant promotion:: pire_moyenne()
-{
-    etudiant e ;
-    float mini ;
-    e= etud_de_promo[0];
-    mini= etud_de_promo[0].getmoyenne();
-    for (int i=1; i<nb_etudiants ; i++)
-    {
-        if( mini > etud_de_promo[i].getmoyenne())
-            {mini = etud_de_promo[i].getmoyenne();
-            e=etud_de_promo[i];}
     }
- return e ;
-}
+  }
+
