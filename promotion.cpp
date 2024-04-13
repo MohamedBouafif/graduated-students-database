@@ -50,4 +50,22 @@ float promotion:: pourcentage ()
 
     }
   }
+ ostream& operator<<(ostream& out ,promotion& p)
+{
+    out <<"***********************AFFICHAGE DE LA PROMOTION************"<<endl ;
+    out <<" nombre total des etudiants: "<<p.nb_etudiants_total<<endl ;
+    p.afficher_promo_ing();
+    p.afficher_promo_mast();
+    return out ;
+
+}
+ istream& operator>>(istream& in ,promotion& p)
+{
+   cout<<"*************saisie de la promotion master*****************"<<endl;
+    p.saisir_promo_mast();
+    cout<<"*************saisie de la promotion ingenieur**************"<<endl;
+    p.saisir_promo_ing();
+    p.nb_etudiants_total=p.nb_etudiants_ing+p.nb_etudiants_master;
+
+}
 
