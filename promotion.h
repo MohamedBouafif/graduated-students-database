@@ -24,7 +24,8 @@ using namespace std ;
 
 
 
-
+friend ostream& operator<<(ostream&,promotion&);
+friend istream& operator>>(istream&,promotion&);
 
  };
 
