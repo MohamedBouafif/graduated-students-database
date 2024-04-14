@@ -47,4 +47,25 @@ bool date:: compare(date d1, date d2)
     else
         return d1.annee<d2.annee;
 }
+bool operator < (date d1, date d2)
+{
+    if(d1.annee == d2.annee)
+        if(d1.mois==d2.mois)
+            return d1.jour<=d2.jour;
+        else
+            return d1.mois<d2.mois;
+    else
+        return d1.annee<d2.annee;
 
+}
+bool operator > (date d1, date d2)
+{
+    if(d1.annee == d2.annee)
+        if(d1.mois==d2.mois)
+            return d1.jour>=d2.jour;
+        else
+            return d1.mois>d2.mois;
+    else
+        return d1.annee>d2.annee;
+
+}
