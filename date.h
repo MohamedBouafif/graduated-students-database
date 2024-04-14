@@ -18,6 +18,10 @@ public:
     void afficher(string ="");
     void saisir(string="");
 
+    /**surcharge des operateurs**/
+    friend bool operator < (date,date);
+    friend bool operator > (date,date);
+
     /**Methode tri des dates**/
     bool compare(date,date);
 
