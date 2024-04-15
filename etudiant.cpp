@@ -1,310 +1,240 @@
-#include "etudiant.h"
-#include <algorithm>
-/**Constructeur**/
-etudiant::etudiant(string nom,string prenom,string mail,string CIN,string matricule_E,bool travaille,int jn,int mn,int an,int jd,int md,int ad,int jf,int mf,int af):
-    date_de_naissance(jn,mn,an),date_debut(jd,md,ad),date_fin(jf,mf,af)
+#include"etudinat_ing.h"
+/**Const**/
+etudiant_ing::etudiant_ing(string section,string nom,string prenom,string mail,string CIN,string matricule_E,bool travaille,int jn,int mn,int an,int jd,int md,int ad,int jf,int mf,int af):etudiant(nom,prenom,mail,CIN,matricule_E,travaille,jn,mn,an,jd,md,ad,jf,mf,af)
 {
-    this->nom = nom;
-    this->prenom = prenom;
-    this->mail=mail;
-    this->CIN = CIN;
-    this->matricule_E = matricule_E;
-    //this->moyenne = moyenne;
-    this->travaille = travaille;
-    if(travaille)
+    this->section = section;
+    moyenne_general = calcul_moyenne_general();
+
+}
+
+/**CONST PAR RECOPIE**/
+etudiant_ing::etudiant_ing(const etudiant_ing& e):etudiant(e)
+{
+    section = e.section;
+
+    for(int i = 0; i < (int) e.classes.size(); i++)
     {
-        char e;
-        do
-        {
+        classes.push_back(e.classes[i]);
+    }
+    for(int i = 0;i < (int) e.moyennes.size(); i++)
+    {
+        moyennes.push_back(e.moyennes[i]);
+    }
+    moyenne_general = calcul_moyenne_general();
+}
 
-            cout<<"Saisir le nom de l'entreprise que letudiant travaille\n";
-            string nomE;
-            cin>>nomE;
-            societes.push_back(nomE);
-            cout<<"Vous voulez ajouter d'autre(s)\n1:OUI\t2:NON";
-            cin>>e;
+/**DES**/
+etudiant_ing::~etudiant_ing()
+{
+   /* for(int i = 0; i < (int)moyennes.size(); i++)
+    {
+        delete moyennes[i];
+    }*/
+    moyennes.clear();
+/*
+    for(int i = 0;i < (int)classes.size(); i++)
+    {
+        delete classes[i];
+    }*/
+    classes.clear();
+}
 
-        }while(e=='1');
+
+/**Les fonctions redefinies**/
+void etudiant_ing::afficher()
+{
+    etudiant::afficher();
+
+    cout<<"Section: "<<section<<endl;
+
+
+    cout<<"Affichage des classes durant ses annees detudes:\n";
+    for(int i = 0;i < (int)classes.size();i++)
+    {
+        cout<<classes[i]<<"\t";
     }
 
-}
+    cout<<endl;
 
-/**Constructeur par recopie**/
-etudiant::etudiant(const etudiant& e)
-{
-    nom = e.nom;
-    prenom = e.prenom;
-    mail = e.mail;
-    CIN = e.CIN;
-    matricule_E = e.matricule_E;
 
-    //moyenne = e.moyenne;
-
-    travaille = e.travaille;
-
-    for(int i = 0; i < (int)e.societes.size() ; i++)
+    cout<<"Affichage des moyennes durant ses annees detudes:\n";
+    for(int i = 0; i<(int)moyennes.size(); i++)
     {
-        societes.push_back(e.societes[i]);
+        cout<<moyennes[i]<<"\t";
     }
 
-    date_debut = e.date_debut;
-    date_fin = e.date_fin;
-    date_de_naissance = e.date_de_naissance;
-
+    cout<<endl;
+    cout<<"Moyenne general du cycle = "<<moyenne_general<<endl;
 }
 
 
-/**AFFICHER: (ba3d bch na3mloulha surcharche ta3 cin>> ) **/
-void etudiant::afficher()
-{
-    cout<<"Nom: "<<nom<<endl;
-    cout<<"Prenom: "<<prenom<<endl;
-    cout<<"Mail: "<<mail<<endl;
-    cout<<"CIN: "<<CIN<<endl;
-    cout<<"Matricule de l'etudiant: "<<matricule_E<<endl;
-    //cout<<"La moyenne de l'etudiant durant ces 3 annees: \n"<<moyenne<<endl;
-    if(travaille)
-    {
-        cout<<"L'etudiant travaille \n";
-        cout<<"Il a travaille recamment dans ces entreprises: \n";
-
-        sort(societes.begin(),societes.end());
-
-        for(int i = 0; i < (int) societes.size() ;i++)
-        {
-            cout<<societes[i]<<"\t";
-        }
-        cout<<endl;
-    }
-    else cout<<"l'etudiant ne travaille pas encore \n";
-
-    cout<<"La date de naissance de letudiant est: \n";
-    cout<<date_de_naissance<<endl;
-
-    cout<<"La date de debut d'etude: \n";
-    cout<<date_debut<<endl;
-
-    cout<<"La date de fin d'etude: \n";
-    cout<<date_fin<<endl;
-
-
-
-}
-
-
-/**METHODE SAISIR (ba3d bch na3mloulha surcharge par cout<<) **/
-void etudiant::saisir()
-{
-    cout<<"Saisir les donnes de letudiant selon l'ordre suivant: \n";
-    cout<<"Nom: ";
-    cin>>nom;
-    cout<<"Prenom: ";
-    cin>>prenom;
-    cout<<"Mail: ";
-    cin>>mail;
-    cout<<"CIN: ";
-    cin>>CIN;
-    cout<<"Matricule: ";
-    cin>>matricule_E;
-    //cout<<"Moyenne: ";
-    //cin>>moyenne;
-
-    cout<<"A il travaille ?\n1-OUI\t2-NON\n";
-    char e;
-    cin>>e;
-    if(e=='1')
-    {
-        travaille = 1;
-        cout<<"Saisir les entreprises que l'etudiant a travaille\n";
-        char x;
-        do
-        {
-            cout<<"Nom entreprise: ";
-            string s;
-            cin>>s;
-            societes.push_back(s);
-            cout<<"Voulez_vous ajouter d'autre(s)";
-            cout<<"\n1-OUI\t2-NON\n";
-            cin>>x;
-        }while(x=='1');
-    }
-    else travaille = 0;
-
-    cout<<"Saisir la date de naissance de letudiant\n";
-    cin>>date_de_naissance;
-
-    cout<<"Saisir la date de debut d'etude:\n";
-    cin>>date_debut;
-
-    cout<<"Saisir la date de fin d'etude:\n";
-    cin>>date_fin;
-
-}
-
-/**Destructeur**/
-etudiant::~etudiant()
-{
-    societes.clear();
-}
-
-int etudiant::taille()
-{
-    return societes.size();
-}
-
-bool etudiant::chercher_Societe(string societe)
-{
-    for(int  i = 0; i<(int)societes.size(); i++)
-    {
-        if(societes[i] == societe)
-        {
-            cout<<"Socite trouvee!";
-            return 1;
-        }
-    }
-    cout<<"Societe non trouvee\n";
-    return 0;
-}
-
-
-int etudiant::dure_etude()
+void etudiant_ing::saisir()
 {
 
-    int x = date_fin.getannee() - date_debut.getannee();
+    etudiant::saisir();
+    cout<<"Saisir la section: "<<endl;
+    cin.ignore();
+    getline(cin,section);
 
-    if(x==0||x==1)
-    {
-        return 1;
-    }
-    else return x;
-}
-
-void etudiant::redouble()
-{
     int periode = dure_etude();
-    if(periode>3)
+
+    cout<<"Saisir les classes durant ces annes detudes\n";
+    for(int i = 0;i<periode;i++)
     {
-        int annes_redouble = periode - 3;
-        cout<<"L'etudiant a redouble "<<annes_redouble<<" annee(s)\n";
+        string c;
+        getline(cin,c);
+        classes.push_back(c);
     }
-    else
+
+    cout<<"Saisir les moyennes durant ces annes detudes\n";
+    for(int i = 0; i < periode;i++)
     {
-        cout<<"L'etudiant n'a pas redouble aucune annee a notre universite\n";
+        float moy;
+        cin>>moy;
+        moyennes.push_back(moy);
     }
+    moyenne_general = calcul_moyenne_general();
 }
-ostream& operator<< (ostream& out, etudiant& etd)
+
+
+/**NV FNC**/
+void etudiant_ing::afficher_classes()
 {
-    out<<"Nom: "<<etd.nom<<endl;
-    out<<"Prenom: "<<etd.prenom<<endl;
-    out<<"Mail: "<<etd.mail<<endl;
-    out<<"CIN: "<<etd.CIN<<endl;
-    out<<"Matricule de l'etudiant: "<<etd.matricule_E<<endl;
-    //cout<<"La moyenne de l'etudiant durant ces 3 annees: \n"<<moyenne<<endl;
-    if(etd.travaille)
+    cout<<"Affichage des classes durant ses annees detudes:\n";
+    for(int i = 0;i < (int)classes.size();i++)
     {
-        out<<"L'etudiant travaille \n";
-        out<<"Il a travaille recamment dans ces entreprises: \n";
-
-        sort(etd.societes.begin(),etd.societes.end());
-
-        for(int i = 0; i < (int) etd.societes.size() ;i++)
-        {
-            out<<etd.societes[i]<<"\t";
-        }
-        out<<endl;
+        cout<<classes[i]<<"\t";
     }
-    else out<<"l'etudiant ne travaille pas encore \n";
 
-    cout<<"La date de naissance de letudiant est: \n";
-    cout<<etd.date_de_naissance<<endl;
+    cout<<endl;
+}
 
-    cout<<"La date de debut d'etude: \n";
-    cout<<etd.date_debut<<endl;
+void etudiant_ing::afficher_moyennes()
+{
 
-    cout<<"La date de fin d'etude: \n";
-    cout<<etd.date_fin<<endl;
+    cout<<"Moyennes durant ses annees detudes:\n";
+    for(int i = 0; i<(int)moyennes.size(); i++)
+    {
+        cout<<moyennes[i]<<"\t";
+    }
+
+    cout<<endl;
+}
+
+void etudiant_ing::chercher_classe(string c)
+{
+    for(int i = 0; i <(int)classes.size(); i++)
+    {
+        if(classes[i]==c)
+        {
+            cout<<"Classe trouvee\n";
+            return;
+        }
+    }
+    cout<<"Classe non trouve!\n";
+    return ;
+}
+
+float etudiant_ing::calcul_moyenne_general()
+{
+    float moyenne = 0;
+    for(int i = 0;i<(int)moyennes.size();i++)
+    {
+        moyenne += moyennes[i];
+    }
+    return moyenne/moyennes.size();
+}
+
+
+ostream& operator<<(ostream& out, etudiant_ing& etd)
+{
+    etudiant* e = &etd;
+    out<<*e;
+    out<<"Section: "<<etd.section<<endl;
+
+
+    out<<"Affichage des classes durant ses annees detudes:\n";
+    for(int i = 0;i < (int)etd.classes.size();i++)
+    {
+        out<<etd.classes[i]<<"\t";
+    }
+
+    out<<endl;
+
+
+    out<<"Affichage des moyennes durant ses annees detudes:\n";
+    for(int i = 0; i<(int)etd.moyennes.size(); i++)
+    {
+        out<<etd.moyennes[i]<<"\t";
+    }
+
+    out<<endl;
+    out<<"Moyenne general du cycle dans la filiere "<<etd.section<<" = "<<etd.moyenne_general<<endl;
     return out;
 }
 
-istream& operator>> (istream& in, etudiant& etd)
+istream& operator>>(istream& in, etudiant_ing& etd)
 {
-    cout<<"Saisir les donnes de letudiant selon l'ordre suivant: \n";
-    cout<<"Nom: ";
-    in>>etd.nom;
-    cout<<"Prenom: ";
-    in>>etd.prenom;
-    cout<<"Mail: ";
-    in>>etd.mail;
-    cout<<"CIN: ";
-    in>>etd.CIN;
-    cout<<"Matricule: ";
-    in>>etd.matricule_E;
-    //cout<<"Moyenne: ";
-    //cin>>moyenne;
+    etudiant* e = &etd;
+    in>>*e;
+    cout<<"Saisir la section: "<<endl;
+    in.ignore();
+    getline(in,etd.section);
 
-    cout<<"A il travaille ?\n1-OUI\t2-NON\n";
-    char e;
-    in>>e;
-    if(e=='1')
+    int periode = etd.dure_etude();
+
+    cout<<"Saisir les classes durant ces annes detudes\n";
+    for(int i = 0;i<periode;i++)
     {
-        etd.travaille = 1;
-        cout<<"Saisir les entreprises que l'etudiant a travaille\n";
-        char x;
-        do
-        {
-            cout<<"Nom entreprise: ";
-            string s;
-            in>>s;
-            etd.societes.push_back(s);
-            cout<<"Voulez_vous ajouter d'autre(s) entreprises";
-            cout<<"\n1-OUI\t2-NON\n";
-            in>>x;
-        }while(x=='1');
+        string c;
+        getline(in,c);
+        etd.classes.push_back(c);
     }
-    else etd.travaille = 0;
 
-
-    cout<<"Saisir la date de naissance de letudiant\n";
-    in>>etd.date_de_naissance;
-
-    cout<<"Saisir la date de debut d'etude:\n";
-    in>>etd.date_debut;
-
-    cout<<"Saisir la date de fin d'etude:\n";
-    in>>etd.date_fin;
+    cout<<"Saisir les moyennes durant ces annes detudes\n";
+    for(int i = 0; i < periode;i++)
+    {
+        float moy;
+        in>>moy;
+        etd.moyennes.push_back(moy);
+    }
+    etd.moyenne_general = etd.calcul_moyenne_general();
     return in;
 }
 
 
-
-etudiant& etudiant::operator = (const etudiant& e)
+etudiant_ing& etudiant_ing::operator = (const etudiant_ing& w)
 {
-    if(this!=&e)
+    if(this!=&w)
     {
-        nom=e.nom;
-        prenom=e.prenom;
-        mail=e.mail;
-        CIN=e.CIN;
-        matricule_E = e.matricule_E;
-        travaille = e.travaille;
+        etudiant* ad1 = this;
+        const etudiant* ad2 = &w;
+        *ad1 = *ad2;
 
-        for(int i = 0; i < (int) e.societes.size(); i++)
+        /**Copie des parties statiques**/
+        section = w.section;
+        moyenne_general = w.moyenne_general;
+
+        
+        /**Liberation des parties dynamique**/
+        moyennes.clear();
+        classes.clear();
+
+        for(int i = 0; i <(int) w.moyennes.size(); i++)
         {
-            societes.push_back(e.societes[i]);
+            moyennes.push_back(w.moyennes[i]);
         }
 
-        date_de_naissance = e.date_de_naissance;
-        date_debut = e.date_debut;
-        date_fin = e.date_fin;
 
+        for(int i = 0; i < (int) w.classes.size(); i++)
+        {
+            classes.push_back(w.classes[i]);
+        }
     }
     return *this;
 }
 
-bool etudiant::operator == (const etudiant& e)
+bool etudiant_ing::operator < (const etudiant_ing&w)
 {
-    if(CIN!=e.CIN||matricule_E!=e.matricule_E) return false;
-    return true;
+    return moyenne_general < w.moyenne_general;
 }
-
-
