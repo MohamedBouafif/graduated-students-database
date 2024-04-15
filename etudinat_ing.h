@@ -31,15 +31,20 @@ public:
     void afficher_classes();
 
 
-    /**Les methodes redefinies**/
+/*************(CES METHODES SONT REDEFINIES~surchagés)*********************/
     void afficher();
     void saisir();
 
-
+/*************************************/
     float calcul_moyenne_general();
+
+/**************Surcharge des operateurs**************************/
+
     friend ostream& operator<<(ostream&, etudiant_ing&);
     friend istream& operator>>(istream&, etudiant_ing&);
+    etudiant_ing& operator = (const etudiant_ing&);
 
+    bool operator < (const etudiant_ing&);   //Tri selon la moyenne general (ordre croissant);
 };
 
 
