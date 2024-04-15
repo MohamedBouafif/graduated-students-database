@@ -1,14 +1,21 @@
 #ifndef DATE_H_INCLUDED
 #define DATE_H_INCLUDED
 #pragma once
-using namespace std;
+
+
 #include <iostream>
+
+using namespace std;
+
 class date
 {
     int jour,mois,annee;
 public:
+
     date(int jour=0,int mois=0,int annee=0){this->jour=jour;this->mois=mois;this->annee=annee;}
     ~date(){}
+
+
     int getjour(){return jour;}
     int getmois(){return mois;}
     int getannee(){return annee;}
@@ -18,12 +25,15 @@ public:
     void afficher(string ="");
     void saisir(string="");
 
-    /**surcharge des operateurs**/
-    friend bool operator < (date,date);
-    friend bool operator > (date,date);
+/**Surcharge des operateurs**/
+    friend ostream& operator<<(ostream&,date&);
+    friend istream& operator>>(istream&,date&);
+    date& operator = (const date&);
+    bool operator == (const date&);
+    bool operator < (const date&); //Pour pouvoir utiliser la fonction sort
 
-    /**Methode tri des dates**/
-    bool compare(date,date);
+
+
 
 };
 
