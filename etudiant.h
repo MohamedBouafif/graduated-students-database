@@ -1,10 +1,14 @@
 #ifndef ETUDIANT_H_INCLUDED
 #define ETUDIANT_H_INCLUDED
+#pragma once
+
+
 #include <iostream>
 #include <vector>
 #include <string>
-#pragma once
 #include "date.h"
+
+
 using namespace std;
 
 
@@ -18,11 +22,11 @@ protected:
 
     bool travaille;
 
-    vector<string> societes;
+    vector<string> societes;   //Partie dynamique contient les nom des societés que lutidiant a travailler dedans
 
     date date_de_naissance;
-    date date_debut;
-    date date_fin;
+    date date_debut;   //debut detude 
+    date date_fin;      // fin etude 
 
 public:
 
@@ -59,23 +63,31 @@ public:
     void setdate_fin(date d){this->date_fin.setjour(d.getjour());this->date_fin.setmois(d.getmois());this->date_fin.setannee(d.getannee());}
 
 
+/*****************************************************/
+
+
     bool chercher_Societe(string);
 
     int taille();
 
     int dure_etude();//calculer la dure detude dans luniversite
 
-    void redouble();//afficher si letudiant a redoublé au moins une annee ou non
+    void redouble();//afficher si letudiant a redoublé au moins une annee ou non dans luniversité
 
 
-/*************(CES METHODES SONT REDEFINIES)*********************/
-    virtual void afficher()=0;
+/*************(CES METHODES SONT REDEFINIES~surchagés)*********************/
+
+    virtual void afficher()=0; //La classe etudiant est VIRTUELLE
     virtual void saisir()=0;
 
+    
 /**************Surcharge des operateurs**************************/
 
-    friend ostream& operator<<(ostream&,etudiant&);
-    friend istream& operator>>(istream&,etudiant&);
+    friend ostream& operator << (ostream&,etudiant&);
+    friend istream& operator >> (istream&,etudiant&);
+    
+    etudiant& operator = (const etudiant&);
+    bool operator == (const etudiant&);
 
 
 };
