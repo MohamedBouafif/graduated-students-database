@@ -78,9 +78,14 @@ void etudiant::afficher()
     }
     else cout<<"l'etudiant ne travaille pas encore \n";
 
-    date_de_naissance.afficher("La date de naissance de letudiant est: \n");
-    date_debut.afficher("La date de debut d'etude: \n");
-    date_fin.afficher("La date de fin d'etude: \n");
+    cout<<"La date de naissance de letudiant est: \n";
+    cout<<date_de_naissance<<endl;
+
+    cout<<"La date de debut d'etude: \n";
+    cout<<date_debut<<endl;
+
+    cout<<"La date de fin d'etude: \n";
+    cout<<date_fin<<endl;
 
 
 
@@ -125,10 +130,14 @@ void etudiant::saisir()
     }
     else travaille = 0;
 
+    cout<<"Saisir la date de naissance de letudiant\n";
+    cin>>date_de_naissance;
 
-    date_de_naissance.saisir("Saisir la date de naissance de letudiant\n");
-    date_debut.saisir("Saisir la date de debut d'etude:\n");
-    date_fin.saisir("Saisir la date de fin d'etude:\n");
+    cout<<"Saisir la date de debut d'etude:\n";
+    cin>>date_debut;
+
+    cout<<"Saisir la date de fin d'etude:\n";
+    cin>>date_fin;
 
 }
 
@@ -206,9 +215,14 @@ ostream& operator<< (ostream& out, etudiant& etd)
     }
     else out<<"l'etudiant ne travaille pas encore \n";
 
-    etd.date_de_naissance.afficher("La date de naissance de letudiant est: \n");
-    etd.date_debut.afficher("La date de debut d'etude: \n");
-    etd.date_fin.afficher("La date de fin d'etude: \n");
+    cout<<"La date de naissance de letudiant est: \n";
+    cout<<etd.date_de_naissance<<endl;
+
+    cout<<"La date de debut d'etude: \n";
+    cout<<etd.date_debut<<endl;
+
+    cout<<"La date de fin d'etude: \n";
+    cout<<etd.date_fin<<endl;
     return out;
 }
 
@@ -242,7 +256,7 @@ istream& operator>> (istream& in, etudiant& etd)
             string s;
             in>>s;
             etd.societes.push_back(s);
-            cout<<"Voulez_vous ajouter d'autre(s)";
+            cout<<"Voulez_vous ajouter d'autre(s) entreprises";
             cout<<"\n1-OUI\t2-NON\n";
             in>>x;
         }while(x=='1');
@@ -250,8 +264,47 @@ istream& operator>> (istream& in, etudiant& etd)
     else etd.travaille = 0;
 
 
-    etd.date_de_naissance.saisir("Saisir la date de naissance de letudiant\n");
-    etd.date_debut.saisir("Saisir la date de debut d'etude:\n");
-    etd.date_fin.saisir("Saisir la date de fin d'etude:\n");
+    cout<<"Saisir la date de naissance de letudiant\n";
+    in>>etd.date_de_naissance;
+
+    cout<<"Saisir la date de debut d'etude:\n";
+    in>>etd.date_debut;
+
+    cout<<"Saisir la date de fin d'etude:\n";
+    in>>etd.date_fin;
     return in;
 }
+
+
+
+etudiant& etudiant::operator = (const etudiant& e)
+{
+    if(this!=&e)
+    {
+        nom=e.nom;
+        prenom=e.prenom;
+        mail=e.mail;
+        CIN=e.CIN;
+        matricule_E = e.matricule_E;
+        travaille = e.travaille;
+
+        for(int i = 0; i < (int) e.societes.size(); i++)
+        {
+            societes.push_back(e.societes[i]);
+        }
+
+        date_de_naissance = e.date_de_naissance;
+        date_debut = e.date_debut;
+        date_fin = e.date_fin;
+
+    }
+    return *this;
+}
+
+bool etudiant::operator == (const etudiant& e)
+{
+    if(CIN!=e.CIN||matricule_E!=e.matricule_E) return false;
+    return true;
+}
+
+
