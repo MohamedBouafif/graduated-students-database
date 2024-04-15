@@ -169,7 +169,7 @@ ostream& operator<<(ostream& out, etudiant_ing& etd)
     }
 
     out<<endl;
-    out<<"Moyenne general du cycle = "<<etd.moyenne_general<<endl;
+    out<<"Moyenne general du cycle dans la filiere "<<etd.section<<" = "<<etd.moyenne_general<<endl;
     return out;
 }
 
@@ -200,4 +200,39 @@ istream& operator>>(istream& in, etudiant_ing& etd)
     }
     etd.moyenne_general = etd.calcul_moyenne_general();
     return in;
+}
+
+
+etudiant_ing& etudiant_ing::operator = (const etudiant_ing& w)
+{
+    if(this!=&w)
+    {
+        etudiant* ad1 = this;
+        const etudiant* ad2 = &w;
+        *ad1 = *ad2;
+
+        section = w.section;
+        moyenne_general = w.moyenne_general;
+
+        /**Liberation des parties dynamique**/
+        moyennes.clear();
+        classes.clear();
+
+        for(int i = 0; i <(int) w.moyennes.size(); i++)
+        {
+            moyennes.push_back(w.moyennes[i]);
+        }
+
+
+        for(int i = 0; i < (int) w.classes.size(); i++)
+        {
+            classes.push_back(w.classes[i]);
+        }
+    }
+    return *this;
+}
+
+bool etudiant_ing::operator < (const etudiant_ing&w)
+{
+    return moyenne_general < w.moyenne_general;
 }
