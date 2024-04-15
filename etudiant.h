@@ -25,8 +25,8 @@ protected:
     vector<string> societes;   //Partie dynamique contient les nom des societés que lutidiant a travailler dedans
 
     date date_de_naissance;
-    date date_debut;   //debut detude 
-    date date_fin;      // fin etude 
+    date date_debut;   //debut detude
+    date date_fin;      // fin etude
 
 public:
 
@@ -77,15 +77,15 @@ public:
 
 /*************(CES METHODES SONT REDEFINIES~surchagés)*********************/
 
-    virtual void afficher()=0; //La classe etudiant est VIRTUELLE
-    virtual void saisir()=0;
+    virtual void afficher(); //La classe etudiant est VIRTUELLE
+    virtual void saisir();
 
-    
+
 /**************Surcharge des operateurs**************************/
 
     friend ostream& operator << (ostream&,etudiant&);
     friend istream& operator >> (istream&,etudiant&);
-    
+
     etudiant& operator = (const etudiant&);
     bool operator == (const etudiant&);
 
