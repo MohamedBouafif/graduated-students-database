@@ -2,6 +2,8 @@
 #define ETUDIANT_MASTER_H_INCLUDED
 
 #include"etudiant.h"
+
+
 class etudiant_master : public etudiant
 {
     friend class entreprise;
@@ -10,7 +12,7 @@ class etudiant_master : public etudiant
     string filiere_licence;
     float note_pfe_licence;
     string filiere_master;
-    vector<float> moyennes;
+    vector<float> moyennes;   //durant ces annees detudes
     float moyenne_general;
 
 
@@ -32,14 +34,21 @@ public:
     void setfiliere_master(string filiere_master){this->filiere_master = filiere_master;}
 
 
-    /** Les methodes redefinies**/
+/*************(CES METHODES SONT REDEFINIES~surchagés)*********************/
+
     void saisir();
     void afficher();
 
+/********************************************************************/
     float calcul_moyenne_general();
+
+/**************Surcharge des operateurs**************************/
+
     friend ostream& operator<<(ostream&, etudiant_master&);
     friend istream& operator>> (istream&, etudiant_master&);
     etudiant_master& operator = (const etudiant_master&);
+
+    bool operator < (const etudiant_master&); // tri dans lordre croissant selon le caractere : moyenne general
 
 
 };
