@@ -1,15 +1,23 @@
 #include "etudiant_master.h"
-etudiant_master::etudiant_master(string filier_licence,float note_pfe_licence,string filiere_master,string nom,string prenom,string mail,string CIN,string matricule_E,bool travaille,int jn,int mn,int an,int jd,int md,int ad,int jf,int mf,int af):
+
+
+etudiant_master :: etudiant_master(string filier_licence,float note_pfe_licence,string filiere_master,string nom,string prenom,string mail,string CIN,string matricule_E,bool travaille,int jn,int mn,int an,int jd,int md,int ad,int jf,int mf,int af):
     etudiant(nom,prenom,mail,CIN,matricule_E,travaille,jn,mn,an,jd,md,ad,jf,mf,af)
+
 {
 
     this->filiere_licence = filiere_licence;
     this->filiere_master = filiere_master;
     this->note_pfe_licence =  note_pfe_licence;
+
+
     moyenne_general = calcul_moyenne_general();
+
 }
 
-etudiant_master::etudiant_master(const etudiant_master &e):etudiant(e)
+/**Const par recopie**/
+
+etudiant_master :: etudiant_master(const etudiant_master &e):etudiant(e)
 {
     filiere_licence = e.filiere_licence;
     filiere_master = e.filiere_master;
@@ -21,12 +29,16 @@ etudiant_master::etudiant_master(const etudiant_master &e):etudiant(e)
     }
     moyenne_general = calcul_moyenne_general();
 }
+
+
 etudiant_master::~etudiant_master()
 {
     /*for(int i = 0;i < (int)moyennes.size(); i++)
     {
         delete moyennes[i];
     }*/
+    /**le dernier boucle genere un erreur lors de COMPILATION **/
+
     moyennes.clear();
 }
 
@@ -71,6 +83,8 @@ void etudiant_master::afficher()
     cout<<endl;
     cout<<"Moyenne general de cycle = "<<moyenne_general<<endl;
 }
+
+
 float etudiant_master::calcul_moyenne_general()
 {
     float moyenne = 0;
@@ -126,3 +140,34 @@ istream& operator>>(istream& in, etudiant_master& etd)
     etd.moyenne_general = etd.calcul_moyenne_general();
     return in;
 }
+
+etudiant_master& etudiant_master:: operator = (const etudiant_master& w)
+{
+    if(this!=&w)
+    {
+        etudiant* ad1 = this;
+        const etudiant* ad2 = &w;
+        *ad1 = *ad2;
+
+        /**Liberation des parties dynamiques**/
+        moyennes.clear();
+        for(int i = 0; i < (int)w.moyennes.size(); i++)
+            moyennes.push_back(w.moyennes[i]);
+
+
+        /**Copie des parties statiques**/
+
+        filiere_licence = w.filiere_licence;
+        note_pfe_licence = w.note_pfe_licence;
+        filiere_master = w.filiere_master;
+        moyenne_general = w.moyenne_general;
+
+    }
+    return  *this;
+}
+bool etudiant_master::operator < (const etudiant_master& w)
+{
+    return moyenne_general < w.moyenne_general;
+}
+
+
