@@ -36,36 +36,64 @@ void date::saisir(string msg)
 }
 
 
-/**function tri**/
-bool date:: compare(date d1, date d2)
+ostream& operator<< (ostream& out, date& d)
 {
-    if(d1.annee == d2.annee)
-        if(d1.mois==d2.mois)
-            return d1.jour<=d2.jour;
-        else
-            return d1.mois<d2.mois;
-    else
-        return d1.annee<d2.annee;
+    out<<"Jour: "<<d.jour;
+    out<<endl;
+    out<<"Mois: "<<d.mois;
+    out<<endl;
+    out<<"Annee: "<<d.annee;
+    return out;
 }
-bool operator < (date d1, date d2)
-{
-    if(d1.annee == d2.annee)
-        if(d1.mois==d2.mois)
-            return d1.jour<=d2.jour;
-        else
-            return d1.mois<d2.mois;
-    else
-        return d1.annee<d2.annee;
 
-}
-bool operator > (date d1, date d2)
+istream& operator>> (istream& in, date& d)
 {
-    if(d1.annee == d2.annee)
-        if(d1.mois==d2.mois)
-            return d1.jour>=d2.jour;
-        else
-            return d1.mois>d2.mois;
-    else
-        return d1.annee>d2.annee;
+    do
+    {
+        cout<<"Jour: ";
+        in>>d.jour;
 
+        if(!(d.jour>=1&&d.jour<=31)) cout<<"Vous avez entrer une date invalide, ressayez:\n";
+
+    }while(!(d.jour>=1&&d.jour<=31));
+
+
+    do
+    {
+        cout<<"Mois: ";in>>d.mois;
+
+        if(!(d.mois>=1&&d.mois<=12))cout<<"Vous avez entrer une date invalide, ressayez:\n";
+
+    }while(!(d.mois>=1&&d.mois<=12));
+
+    cout<<"Annee: ";in>>d.annee;
+
+    return in;
 }
+bool date::operator==(const date& d)
+{
+    if(jour!=d.jour||mois!=d.mois||annee!=d.annee) return false;
+    return true;
+}
+
+date& date::operator= (const date& d)
+{
+    if(this!=&d)
+    {
+        jour = d.jour;
+        mois = d.mois;
+        annee = d.annee;
+    }
+    return *this;
+}
+bool date::operator < (const date& d)
+{
+    if(annee == d.annee)
+        if(mois == d.mois)
+            return jour <= d.jour;
+        else
+            return mois < d.mois;
+    else
+        return annee < d.annee;
+}
+
