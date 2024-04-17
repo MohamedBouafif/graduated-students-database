@@ -5,15 +5,15 @@ class pfes
 {
     vector<pfe> tab_pfe;
 public:
-    
+
     pfes(){};
     pfes(const pfes&);
     ~pfes();
-    
+
 /**get**/
     vector<pfe> gettab_pfe(){return tab_pfe;}
 
-    
+
 
     void remplir(etudiants); //Remplir les pfe des etudiants presant dans la base de donne
     void remplir();
@@ -22,8 +22,13 @@ public:
 
     void ajouter(pfe,int = 0);
     void supprimer(int = 0);
+    void enregistrer();
+    /******************surcharge des operateurs************/
+    friend ostream& operator<<(ostream&,pfes&);
+    friend istream& operator>>(istream&,pfes&);
 
 };
 
 
 #endif // PFES_H_INCLUDED
+
