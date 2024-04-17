@@ -28,6 +28,8 @@ void pfes::afficher()
     cout<<endl;
 }
 
+
+
 void pfes::remplir()
 {
     char rep;
@@ -52,7 +54,7 @@ void pfes::remplir()
 
 void pfes::remplir(etudiants etds)
 {
-    vector<etudiant*> v = etds.gettab();
+    vector<etudiant*> v = etds.getab();
     cout<<"Saisir les sujet de pfe des etudiants\n";
 
     vector<pair<string,etudiant*>> w;     //Ce vecteur contient le sujetde pfe de chaque etudiant
@@ -85,7 +87,7 @@ void pfes::remplir(etudiants etds)
         {
             if(*it==w[i].first)
             {
-                etds.ajouter(w[i].second,etds.taille());   
+                etds.ajouter(w[i].second,etds.taille());
             }
 
         }
@@ -142,4 +144,25 @@ void pfes::supprimer(int ind)
        cout<<"Suppression avec succes\n";
     }
     else cout<<"position inexistante!"<<endl;
+
 }
+void pfes::enregistrer()
+{
+     ofstream fichier ("c:pfes.txt",ios::app);
+    if (!fichier)
+        cout << "erreur"<<endl ;
+    fichier<<*this ;
+    fichier.close();
+
+}
+/*********************surcharge des operateurs ***********************/
+ ostream& operator<<(ostream& out,pfes& p)
+ {
+        out<<"Affichage des PFE: \n";
+    for(int i = 0; i <(int)p.tab_pfe.size();i++)
+    {
+       out << p.tab_pfe[i];
+    }
+    cout<<endl;
+    return out;
+ }
