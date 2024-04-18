@@ -1,16 +1,58 @@
 #include <iostream>
 using namespace std;
-#include "date.cpp"
 #include "etudiant.cpp"
 #include "etudinat_ing.cpp"
-#include "etudiant_master.cpp"
 #include "etudiants.cpp"
+#include "etudiant_master.cpp"
+#include<fstream>
 #include "pfe.cpp"
-
+#include "promotion_master.cpp"
+#include "promotion_ing.cpp"
+#include "promotion.cpp"
 #include "pfes.cpp"
-//#include "entreprise.cpp"
-int main()
-{
+#include "fonctions.cpp"
+
+int main() {
+
+    int choix;
+
+    do {
+        // Affichage du menu principal
+        cout << "Menu :\n";
+        cout << "1 - Etudiant\n";
+        cout << "2 - Promotion\n";
+        cout << "3 - PFES\n";
+        cout << "4 - Entreprise\n";
+        cout << "0 - Quitter\n";
+        cout << "Entrez votre choix : ";
+
+        // Lecture du choix de l'utilisateur
+        cin >> choix;
+
+        // Appel de la fonction correspondante selon le choix de l'utilisateur
+        switch(choix) {
+            case 1:
+                afficherSousMenuEtudiant();
+                break;
+            case 2:
+                afficherSousMenuPromotion(); // Appel du sous-menu pour la gestion des promotions
+                break;
+            case 3:
+                cout << "Gestion des PFES\n";
+                break;
+            case 4:
+                cout << "Gestion des entreprises\n";
+                break;
+            case 0:
+                cout << "Programme terminé.\n";
+                break;
+            default:
+                cout << "Choix invalide. Veuillez entrer un nombre entre 0 et 4.\n";
+        }
+
+    } while(choix != 0); // Répéter le menu principal tant que l'utilisateur ne choisit pas de quitter
+
+    return 0;}
     /** test de la classe date: **/
 
     /*date d(10,12,2001);
@@ -169,4 +211,4 @@ int main()
     en.remplir(e,p);
     en.afficher_par_etudiant();*/
 
-}
+
