@@ -67,13 +67,13 @@ void promotion_ing::afficher_promo_ing()
         etudiants_ing[i].afficher();
     }
 }
-bool compare (etudiant_ing e1,etudiant_ing e2)
+/*bool compare (etudiant_ing e1,etudiant_ing e2)
 {
     return e1.getmoyenne_general() > e2.getmoyenne_general();
-}
+}*/
 void promotion_ing::afficher_promo_ing_triee()
 {    //Sort the vector using the compare function
-//   sort (etudiants_ing.begin(),etudiants_ing.end(),compare);
+     sort (etudiants_ing.begin(),etudiants_ing.end());
     //display the sorted result
     afficher_promo_ing();
 
@@ -88,8 +88,41 @@ void promotion_ing::afficher_promo_ing_triee()
 {
     etudiants_ing.push_back(e);
 }
+int promotion_ing::chercher_etudiant( string s)
+{   int i=0;
 
-ostream& operator<<(ostream& out,promotion_ing& p)
+bool b=false;
+while( (b==false )&& (i <etudiants_ing.size()) )
+{
+        if ((get_etudiant(i).getCIN()==s)|| (get_etudiant(i).getmatricule_E()==s))
+            {b = true;
+              break ;}
+       i=i+1;
+
+}
+    if (b==true)
+        return i ;
+    else
+    return -1;
+}
+
+/*******************surchagre des operateurs*****************************/
+promotion_ing& promotion_ing ::operator =(const promotion_ing& p)
+{
+    if (this!= &p)
+    {
+         num_promo_ing = p.num_promo_ing;
+    nb_etudiants_ing = p.nb_etudiants_ing;
+    date_graduation_ing = p.date_graduation_ing;
+    for (int i=0 ;i <p.etudiants_ing.size(); i++)
+    {
+        etudiants_ing[i]=p.etudiants_ing[i];
+    }
+    }
+    return *this ;
+
+}
+   ostream& operator<<(ostream& out,promotion_ing& p)
 {
     p.nb_etudiants_ing= p.etudiants_ing.size();
     out <<"***************AFFICHAGE PROMOTION INGENIEURS *************************"<<endl ;
@@ -131,5 +164,10 @@ istream& operator>>(istream& in,promotion_ing& p)
 
     return in;
 }
-
-
+bool promotion_ing::operator == (const promotion_ing& p)
+ {
+     if( num_promo_ing==p.num_promo_ing)
+        return true ;
+     else
+        return false ;
+ }
