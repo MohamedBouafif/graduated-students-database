@@ -41,7 +41,9 @@ etudiant::etudiant(const etudiant& e)
     //moyenne = e.moyenne;
 
     travaille = e.travaille;
-
+    /** for(auto it = e.societes.begin(); it != e.societes.end(); ++it) {
+        societes.push_back(*it);
+    }**/
     for(int i = 0; i < (int)e.societes.size() ; i++)
     {
         societes.push_back(e.societes[i]);
@@ -69,11 +71,12 @@ void etudiant::afficher()
         cout<<"Il a travaille recamment dans ces entreprises: \n";
 
         sort(societes.begin(),societes.end());
-
         for(int i = 0; i < (int) societes.size() ;i++)
         {
             cout<<societes[i]<<"\t";
         }
+
+
         cout<<endl;
     }
     else cout<<"l'etudiant ne travaille pas encore \n";
@@ -162,6 +165,8 @@ bool etudiant::chercher_Societe(string societe)
             return 1;
         }
     }
+     // Boucle pour rechercher la société dans la liste societes en utilisant un itérateur
+
     cout<<"Societe non trouvee\n";
     return 0;
 }
@@ -207,22 +212,22 @@ ostream& operator<< (ostream& out, etudiant& etd)
 
         sort(etd.societes.begin(),etd.societes.end());
 
-        for(int i = 0; i < (int) etd.societes.size() ;i++)
-        {
-            out<<etd.societes[i]<<"\t";
+
+        for(auto it = etd.societes.begin(); it != etd.societes.end(); ++it) {
+            cout << *it << "\t";
         }
         out<<endl;
     }
     else out<<"l'etudiant ne travaille pas encore \n";
 
-    cout<<"La date de naissance de letudiant est: \n";
-    cout<<etd.date_de_naissance<<endl;
+    out<<"La date de naissance de letudiant est: \n";
+    out<<etd.date_de_naissance<<endl;
 
-    cout<<"La date de debut d'etude: \n";
-    cout<<etd.date_debut<<endl;
+    out<<"La date de debut d'etude: \n";
+    out<<etd.date_debut<<endl;
 
-    cout<<"La date de fin d'etude: \n";
-    cout<<etd.date_fin<<endl;
+    out<<"La date de fin d'etude: \n";
+    out<<etd.date_fin<<endl;
     return out;
 }
 
@@ -289,10 +294,6 @@ etudiant& etudiant::operator = (const etudiant& e)
         travaille = e.travaille;
         /**Supprimer le vecteur qui contients les societes de this   <=> supprimer ma partie dynamique de this**/
         societes.clear();
-        for(int i = 0; i < (int) e.societes.size(); i++)
-        {
-            societes.push_back(e.societes[i]);
-        }
 
         date_de_naissance = e.date_de_naissance;
         date_debut = e.date_debut;
