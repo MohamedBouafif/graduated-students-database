@@ -1,3 +1,4 @@
+
 #include"etudinat_ing.h"
 /**Const**/
 etudiant_ing::etudiant_ing(string section,string nom,string prenom,string mail,string CIN,string matricule_E,bool travaille,int jn,int mn,int an,int jd,int md,int ad,int jf,int mf,int af):etudiant(nom,prenom,mail,CIN,matricule_E,travaille,jn,mn,an,jd,md,ad,jf,mf,af)
@@ -16,9 +17,12 @@ etudiant_ing::etudiant_ing(const etudiant_ing& e):etudiant(e)
     {
         classes.push_back(e.classes[i]);
     }
-    for(int i = 0;i < (int) e.moyennes.size(); i++)
+    /**for(int i = 0;i < (int) e.moyennes.size(); i++)
     {
         moyennes.push_back(e.moyennes[i]);
+    }**/
+    for(auto it = e.moyennes.begin(); it != e.moyennes.end(); ++it) {
+            moyennes.push_back(*it);
     }
     moyenne_general = calcul_moyenne_general();
 }
@@ -58,9 +62,12 @@ void etudiant_ing::afficher()
 
 
     cout<<"Affichage des moyennes durant ses annees detudes:\n";
-    for(int i = 0; i<(int)moyennes.size(); i++)
+    /**for(int i = 0; i<(int)moyennes.size(); i++)
     {
         cout<<moyennes[i]<<"\t";
+    }**/
+    for(auto it = moyennes.begin(); it != moyennes.end(); ++it) {
+        cout << *it << "\t";
     }
 
     cout<<endl;
@@ -113,9 +120,12 @@ void etudiant_ing::afficher_moyennes()
 {
 
     cout<<"Moyennes durant ses annees detudes:\n";
-    for(int i = 0; i<(int)moyennes.size(); i++)
+    /**for(int i = 0; i<(int)moyennes.size(); i++)
     {
         cout<<moyennes[i]<<"\t";
+    }**/
+    for(auto it = moyennes.begin(); it != moyennes.end(); ++it) {
+        cout << *it << "\t";
     }
 
     cout<<endl;
@@ -138,9 +148,12 @@ void etudiant_ing::chercher_classe(string c)
 float etudiant_ing::calcul_moyenne_general()
 {
     float moyenne = 0;
-    for(int i = 0;i<(int)moyennes.size();i++)
+    /**for(int i = 0;i<(int)moyennes.size();i++)
     {
         moyenne += moyennes[i];
+    }**/
+    for(auto it = moyennes.begin(); it != moyennes.end(); ++it) {
+        moyenne += *it;
     }
     return moyenne/moyennes.size();
 }
@@ -163,9 +176,12 @@ ostream& operator<<(ostream& out, etudiant_ing& etd)
 
 
     out<<"Affichage des moyennes durant ses annees detudes:\n";
-    for(int i = 0; i<(int)etd.moyennes.size(); i++)
+    /**for(int i = 0; i<(int)etd.moyennes.size(); i++)
     {
         out<<etd.moyennes[i]<<"\t";
+    }**/
+     for(auto it = etd.moyennes.begin(); it != etd.moyennes.end(); ++it) {
+        out << *it << "\t";
     }
 
     out<<endl;
@@ -218,9 +234,12 @@ etudiant_ing& etudiant_ing::operator = (const etudiant_ing& w)
         moyennes.clear();
         classes.clear();
 
-        for(int i = 0; i <(int) w.moyennes.size(); i++)
+       /** for(int i = 0; i <(int) w.moyennes.size(); i++)
         {
             moyennes.push_back(w.moyennes[i]);
+        }**/
+        for (auto it = w.moyennes.begin(); it != w.moyennes.end(); ++it) {
+            moyennes.push_back(*it); // Copier les nouvelles moyennes
         }
 
 
@@ -236,3 +255,11 @@ bool etudiant_ing::operator < (const etudiant_ing&w)
 {
     return moyenne_general < w.moyenne_general;
 }
+void  etudiant_ing::enregistrer ()
+{
+    ofstream fichier ("C:etudiants ingenieurs.txt",ios::app);
+    if (!fichier)
+        cout << "erreur"<< endl ;
+    fichier <<*this ;
+}
+
