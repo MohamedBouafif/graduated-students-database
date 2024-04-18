@@ -104,6 +104,24 @@ void promotion_master::ajouter_etudiant_master(etudiant_master e )
 {
     etudiants_master.push_back(e);
 }
+int promotion_master::chercher_etudiant( string s)
+{   int i=0;
+
+bool b=false;
+while( (b==false )&& (i <etudiants_master.size()) )
+{
+        if ((get_etudiant(i).getCIN()==s)|| (get_etudiant(i).getmatricule_E()==s))
+            {b = true;
+              break ;}
+       i=i+1;
+
+}
+    if (b==true)
+        return i ;
+    else
+    return -1;
+}
+
 
 
   ostream& operator<<(ostream& out,promotion_master& p)
@@ -145,4 +163,25 @@ void promotion_master::ajouter_etudiant_master(etudiant_master e )
     in>>rep;
     }
     return in;
+ }
+promotion_master& promotion_master ::operator =(const promotion_master& p)
+{
+    if (this!= &p)
+   {
+    num_promo_master = p.num_promo_master;
+    nb_etudiants_master = p.nb_etudiants_master;
+    date_graduation_master = p.date_graduation_master;
+    for (int i=0 ;i <p.etudiants_master.size(); i++)
+    {
+        etudiants_master[i]=p.etudiants_master[i];
+    }}
+    return *this ;}
+
+
+  bool promotion_master::operator == (const promotion_master& p)
+ {
+     if( num_promo_master==p.num_promo_master)
+        return true ;
+     else
+        return false ;
  }
