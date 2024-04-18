@@ -166,3 +166,21 @@ void pfes::enregistrer()
     cout<<endl;
     return out;
  }
+ istream& operator>>(istream& in,pfes& p)
+ {
+     char rep;
+
+    cout<<"\nAjouter pfe:\n";
+    do
+    {
+        pfe e;
+        //e.saisir();
+        in>>e;
+        p.tab_pfe.push_back(e);
+        cout<<"Voulez-vous ajouter un autre PFE ?\n";
+        cout<<"1:Oui\t2:Non\n";
+        in>>rep;
+    }
+    while(rep=='1');
+    return in;
+ }
