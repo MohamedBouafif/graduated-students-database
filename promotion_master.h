@@ -11,6 +11,7 @@ class promotion_master
        vector <etudiant_master> etudiants_master ;
        int nb_etudiants_master ;
    public :
+       //constructeur & destructeur
        promotion_master (int=0,int=0,int=0,int=0,int=0);
        promotion_master (const promotion_master& );
        ~promotion_master ();
@@ -30,11 +31,14 @@ class promotion_master
        void afficher_promo_mast();
        void afficher_promo_mast_triee();
        etudiant_master majeur_promo_mast();
+       int chercher_etudiant(string);
 
 
-
+      /********************surcharge des operateurs**********************/
        friend ostream& operator<<(ostream&,promotion_master&);
        friend istream& operator>>(istream&,promotion_master&);
+       promotion_master & operator =(const promotion_master &);
+       bool operator == (const promotion_master& );
 
 
 
