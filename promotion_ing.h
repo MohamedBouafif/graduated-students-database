@@ -1,9 +1,10 @@
 #ifndef PROMOTION_ING_H_INCLUDED
 #define PROMOTION_ING_H_INCLUDED
 //#include"date.cpp"
- #include "etudiant_ing.h"
+ #include "etudinat_ing.h"
 #include<vector>
 #include<algorithm>
+#include <string>
 
 class promotion_ing
 {
@@ -13,6 +14,7 @@ class promotion_ing
    vector <etudiant_ing> etudiants_ing ;
    int nb_etudiants_ing ;
    public :
+       //constructeurs & destructeurs
        promotion_ing (int=0,int=0, int=0,int=0,int=0);
        pomotion_ing(const promotion_ing& );
        ~promotion_ing();
@@ -29,16 +31,20 @@ class promotion_ing
 
 
        void ajouter_etudiant_ing(etudiant_ing );
-       void saisir_promo_ing();
-       void afficher_promo_ing();
        void afficher_promo_ing_triee();
        etudiant_ing majeur_promo_ing();
+       int chercher_etudiant(string);
+      /*****************************methodes redefenis*******************/
+       void saisir_promo_ing();
+       void afficher_promo_ing();
 
 
+
+     /**********************surcharge des operateurs******************/
        friend ostream& operator<<(ostream&,promotion_ing&);
        friend istream& operator>>(istream&,promotion_ing&);
-
-
+       promotion_ing & operator =(const promotion_ing &);
+       bool operator == (const promotion_ing& );
 };
 
 #endif // PROMOTION_ING_H_INCLUDED
