@@ -2,15 +2,12 @@
 #define ETUDINAT_ING_H_INCLUDED
 #include"etudiant.h"
 
-
 class etudiant_ing : public etudiant
 {
     friend class entreprise;
-
-
     vector<string> classes;
     string section;
-    vector<float> moyennes;
+    list<float> moyennes;
     float moyenne_general;
 
 
@@ -45,6 +42,8 @@ public:
     etudiant_ing& operator = (const etudiant_ing&);
 
     bool operator < (const etudiant_ing&);   //Tri selon la moyenne general (ordre croissant);
+    /**************gestion de fichier***************/
+    void enregistrer();
 };
 
 
