@@ -10,7 +10,7 @@ class etudiant_ing : public etudiant
 
     vector<string> classes;
     string section;
-    list<float> moyennes;
+    vector<float> moyennes;
     float moyenne_general;
 
 
@@ -45,8 +45,6 @@ public:
     etudiant_ing& operator = (const etudiant_ing&);
 
     bool operator < (const etudiant_ing&);   //Tri selon la moyenne general (ordre croissant);
-    /**************gestion de fichier***************/
-    void enregistrer();
 };
 
 
