@@ -5,8 +5,9 @@
 class pfe
 {
 
-    //friend class entreprises;
+    friend class entreprises;
     friend class etudiants;
+
     string sujet_pfe;                       //Le titre de rapport de pfe
     string field;                           // Exemple : developpement, IA , machine learning etc....
     string entreprise_stage_pfe;
@@ -44,11 +45,11 @@ public:
     void afficher();
     void saisir();
     void saisir(etudiants);   //A etuliser si jai saisi un pfe dont les etudiants sont deja saisit!
-
+    void saisir(etudiants, string );
 /**Surcharge des operateurs**/
     friend ostream& operator << (ostream&,pfe&);
     friend istream& operator >> (istream&,pfe&);
-
+    pfe& operator = (const pfe&);
 
 
 };
