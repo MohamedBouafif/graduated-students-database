@@ -1,4 +1,73 @@
 #include<fstream>
+void recuperer_fichier(string txt)
+  {
+      ifstream fichier (txt,ios::app);
+       if (!fichier)
+        cout << "erreur"<<endl ;
+    cout <<"***********affichage de contenu de fichier*************"<<endl ;
+    char ch ;
+    while (fichier.get(ch))
+        cout <<ch;
+
+    fichier.close();
+  }
+void vider_fichier (string txt)
+{
+   ofstream fichier(txt,ofstream::out |ofstream::trunc )      ;
+   fichier.close();
+   cout<<"contenu de fichier supprimer avec succee"<<endl ;
+}
+
+
+
+
+
+
+
+
+
+
+
+void afficherPromotion() {
+    int choix;
+    promotion p ;
+
+
+    do {
+        // Affichage du sous-menu
+        cout << "Sous-Menu Promotion :\n";
+        cout << "1 - Saisir les informations de la promotion\n";
+        cout << "2 - Afficher les informations de la promotion\n";
+        cout << "3 - Afficher les statistiques de la promotion\n";
+        cout << "0 - Retour au menu principal\n";
+        cout << "Entrez votre choix : ";
+
+        // Lecture du choix de l'utilisateur
+        cin >> choix;
+
+        // Appel de la fonction correspondante selon le choix de l'utilisateur
+        switch(choix) {
+            case 1:
+              cin>>p ;
+                break;
+            case 2:
+                cout<<p;
+                break;
+            case 3:
+              {float  b= p.pourcentage();
+              cout <<b<<endl ;
+              break;}
+            case 0:
+                cout << "Retour au menu principal.\n";
+                break;
+            default:
+                cout << "Choix invalide. Veuillez entrer un nombre entre 0 et 3.\n";
+        }
+
+    } while(choix != 0); // Répéter le sous-menu tant que l'utilisateur ne choisit pas de retourner au menu principal
+}
+
+
 void afficherMenu_promomast() {
     int choix,i;
     promotion_master p ;
@@ -6,12 +75,12 @@ void afficherMenu_promomast() {
      string donne;
 
     do {
-        cout << "\n=== Menu de la promotion ing  ===\n";
+        cout << "\n=== Menu du promotion master  ===\n";
         cout << "1. Saisie\n";
         cout << "2. Afficher aleatoirement \n";
         cout << "3. Afficher triee \n";
         cout << "4. Ajouter etudiant a une promotion \n";
-        cout << "5. Chercher l'�tudiant majeur dans une promotion\n";
+        cout << "5. Chercher l'étudiant majeur dans une promotion\n";
         cout << "6. Chercher un etudiant dans une promotion\n";
         cout << "0. Quitter\n";
         cout << "Choix : ";
@@ -54,10 +123,11 @@ void afficherMenu_promomast() {
                 cout << "Au revoir !\n";
                 break;
             default:
-                cout << "Choix invalide. Veuillez r�essayer.\n";
+                cout << "Choix invalide. Veuillez réessayer.\n";
         }
     } while (choix != 0);
 }
+
 
 void afficherMenu_promoing() {
     int choix,i;
@@ -71,7 +141,7 @@ void afficherMenu_promoing() {
         cout << "2. Afficher aleatoirement \n";
         cout << "3. Afficher triee \n";
         cout << "4. Ajouter etudiant a une promotion \n";
-        cout << "5. Chercher l'�tudiant majeur dans une promotion\n";
+        cout << "5. Chercher l'étudiant majeur dans une promotion\n";
         cout << "6. Chercher un etudiant dans une promotion\n";
         cout << "0. Quitter\n";
         cout << "Choix : ";
@@ -114,11 +184,49 @@ void afficherMenu_promoing() {
                 cout << "Au revoir !\n";
                 break;
             default:
-                cout << "Choix invalide. Veuillez r�essayer.\n";
+                cout << "Choix invalide. Veuillez réessayer.\n";
         }
     } while (choix != 0);
 }
-void afficherSousMenuPromotion() {
+
+
+void affichermenuetudiants()
+{
+    etudiants e;
+     int choix;
+
+    do {
+        // Affichage du sous-menu
+        cout << "Sous-Menu Etudiant :\n";
+        cout << "1 - Remplir les informations des etudiants\n";
+        cout << "2 - Afficher les informations des etudiants\n";
+        cout << "0 - Retour au menu principal\n";
+        cout << "Entrez votre choix : ";
+
+        // Lecture du choix de l'utilisateur
+        cin >> choix;
+
+        // Appel de la fonction correspondante selon le choix de l'utilisateur
+        switch(choix) {
+            case 1:
+               cin >> e;
+                break;
+            case 2:
+                cout <<e;
+                break;
+            case 0:
+                cout << "Retour au menu principal.\n";
+                break;
+            default:
+                cout << "Choix invalide. Veuillez entrer un nombre entre 0 et 2.\n";
+        }
+
+    } while(choix != 0); // Répéter le sous-menu tant que l'utilisateur ne choisit pas de retourner au menu principal
+}
+
+
+void afficherSousMenuPromotion(){
+
 
     int choix;
 
@@ -143,25 +251,35 @@ void afficherSousMenuPromotion() {
                 afficherMenu_promomast();
                 break;
             case 3:
-                cout <<"promoo"<<endl ;
+             afficherPromotion();
                 break;
             case 0:
                 cout << "Retour au menu principal.\n";
                 break;
             default:
                 cout << "Choix invalide. Veuillez entrer un nombre entre 0 et 3.\n";
-        }
+        }}
 
-    } while(choix != 0); // R�p�ter le sous-menu tant que l'utilisateur ne choisit pas de retourner au menu principal
+     while(choix != 0);
+
+
+
+
+
+
+
 }
- afficherSousMenuEtudiant()
- {int choix;
-
+ void afficherSousMenuEtudiantIng() {
+    int choix;
+    etudiant_ing e;
     do {
         // Affichage du sous-menu
-        cout << "Sous-Menu Etudiant :\n";
-        cout << "1 - Etudiant Master\n";
-        cout << "2 - Etudiant Ing�nieur\n";
+        cout << "Sous-Menu Etudiant Ingenieur :\n";
+        cout << "1 - saisie etudiant: \n";
+        cout << "2 - afficher l'etudiant: \n";
+        cout << "3 - Calculer la moyenne generale\n";
+        cout << "4 - Enregistrer les informations\n";
+        cout << "5 - Recuperer les informations des etudiants dans le fichier\n";
         cout << "0 - Retour au menu principal\n";
         cout << "Entrez votre choix : ";
 
@@ -171,11 +289,106 @@ void afficherSousMenuPromotion() {
         // Appel de la fonction correspondante selon le choix de l'utilisateur
         switch(choix) {
             case 1:
-                //
+                cin>> e;
                 break;
             case 2:
-               //
+                cout << e;
                 break;
+            case 3:
+              {float b= e.calcul_moyenne_general();
+               cout <<"la moyenne general de cet etudiant est: "<<b <<endl  ;
+                break;}
+            case 4:
+                e.enregistrer();
+                break;
+            case 5:
+                 recuperer_fichier("C:etudiants ingenieurs.txt");
+                break;
+            case 0:
+                cout << "Retour au menu principal.\n";
+                break;
+            default:
+                cout << "Choix invalide. Veuillez entrer un nombre entre 0 et 5.\n";
+        }
+
+    } while(choix != 0); // Répéter le sous-menu tant que l'utilisateur ne choisit pas de retourner au menu principal
+}
+void afficherSousMenuEtudiantmast() {
+    int choix;
+    etudiant_master e;
+    do {
+        // Affichage du sous-menu
+        cout << "Sous-Menu Etudiant Ingenieur :\n";
+        cout << "1 - saisie etudiant: \n";
+        cout << "2 - afficher l'etudiant: \n";
+        cout << "3 - verifier si l'etudiant a redouble \n";
+        cout << "4 - verifier si l'etudiant a travaille dans une societe\n";
+        cout << "5 - Enregistrer les informations\n";
+        cout << "6 - Recuperer les informations des etudiants dans le fichier\n";
+        cout << "0 - Retour au menu principal\n";
+        cout << "Entrez votre choix : ";
+
+        // Lecture du choix de l'utilisateur
+        cin >> choix;
+
+        // Appel de la fonction correspondante selon le choix de l'utilisateur
+        switch(choix) {
+            case 1:
+                cin>> e;
+                break;
+            case 2:
+                cout << e;
+                break;
+            case 3:
+              e.redouble();
+              break;
+            case 4:
+              {string s ;
+               cout<< "entrer le nom de societe: ";
+               cin >> s;
+               e.chercher_Societe(s);
+               }
+               break ;
+            case 5:
+                 e.enregistrer();
+                break;
+            case 6:
+                recuperer_fichier("C:etudiants master.txt");
+                break;
+            case 0:
+                cout << "Retour au menu principal.\n";
+                break;
+            default:
+                cout << "Choix invalide. Veuillez entrer un nombre entre 0 et 5.\n";
+        }
+
+    } while(choix != 0); // Répéter le sous-menu tant que l'utilisateur ne choisit pas de retourner au menu principal
+}
+ void afficherSousMenuEtudiant(){
+ int choix;
+
+    do {
+        // Affichage du sous-menu
+        cout << "Sous-Menu Etudiant :\n";
+        cout << "1 - Etudiant Master\n";
+        cout << "2 - Etudiant Ingenieur\n";
+        cout << "3 - etudiant\n";
+        cout << "0 - Retour au menu principal\n";
+        cout << "Entrez votre choix : ";
+
+        // Lecture du choix de l'utilisateur
+        cin >> choix;
+
+        // Appel de la fonction correspondante selon le choix de l'utilisateur
+        switch(choix) {
+            case 1:
+                 afficherSousMenuEtudiantmast();
+                break;
+            case 2:
+               afficherSousMenuEtudiantIng();
+                break;
+            case 3:
+                affichermenuetudiants();
             case 0:
                 cout << "Retour au menu principal.\n";
                 break;
@@ -183,25 +396,47 @@ void afficherSousMenuPromotion() {
                 cout << "Choix invalide. Veuillez entrer un nombre entre 0 et 2.\n";
         }
 
-    } while(choix != 0); // R�p�ter le sous-menu tant que l'utilisateur ne choisit pas de retourner au menu principal
+    } while(choix != 0); // Répéter le sous-menu tant que l'utilisateur ne choisit pas de retourner au menu principal
 }
 
+void afficherSousMenuPFE() {
+    int choix;
+    pfes p ;
 
-void recuperer_fichier(string txt)
-  {
-      ifstream fichier (txt,ios::app);
-       if (!fichier)
-        cout << "erreur"<<endl ;
-    cout <<"***********affichage de contenu de fichier*************"<<endl ;
-    char ch ;
-    while (fichier.get(ch))
-        cout <<ch;
+    do {
+        // Affichage du sous-menu
+        cout << "Sous-Menu PFE :\n";
+        cout << "1 - Saisir les informations du PFE\n";
+        cout << "2 - Afficher les informations du PFE\n";
+        cout << "3 - Enregistrer les informations du PFE\n";
+        cout << "4 - Récupérer les informations du PFE\n";
+        cout << "0 - Retour au menu principal\n";
+        cout << "Entrez votre choix : ";
 
-    fichier.close();
-  }
-void vider_fichier (string txt)
-{
-   ofstream fichier(txt,ofstream::out |ofstream::trunc )      ;
-   fichier.close();
-   cout<<"contenu de fichier supprimer avec succee"<<endl ;
+        // Lecture du choix de l'utilisateur
+        cin >> choix;
+
+        // Appel de la fonction correspondante selon le choix de l'utilisateur
+        switch(choix) {
+            case 1:
+                cin >> p;
+                break;
+            case 2:
+                cout<< p;
+                break;
+            case 3:
+                p.enregistrer();
+                break;
+            case 4:
+                recuperer_fichier("c:pfes.txt");
+                break;
+            case 0:
+                cout << "Retour au menu principal.\n";
+                break;
+            default:
+                cout << "Choix invalide. Veuillez entrer un nombre entre 0 et 4.\n";
+        }
+
+    } while(choix != 0); // Répéter le sous-menu tant que l'utilisateur ne choisit pas de retourner au menu principal
 }
+
