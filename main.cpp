@@ -13,6 +13,9 @@ using namespace std;
 #include "fonctions.cpp"
 
 int main() {
+    //vider_fichier("C:etudiants ingenieurs.txt");
+    //vider_fichier("C:etudiants master.txt");
+    vider_fichier("c:pfes.txt");
 
     int choix;
 
@@ -32,19 +35,19 @@ int main() {
         // Appel de la fonction correspondante selon le choix de l'utilisateur
         switch(choix) {
             case 1:
-                afficherSousMenuEtudiant();
+                afficherSousMenuEtudiant();// Appel du sous-menu pour la gestion des etudiants
                 break;
             case 2:
                 afficherSousMenuPromotion(); // Appel du sous-menu pour la gestion des promotions
                 break;
             case 3:
-                cout << "Gestion des PFES\n";
+                afficherSousMenuPFE();
                 break;
             case 4:
                 cout << "Gestion des entreprises\n";
                 break;
             case 0:
-                cout << "Programme terminé.\n";
+                cout << "Programme termine.\n";
                 break;
             default:
                 cout << "Choix invalide. Veuillez entrer un nombre entre 0 et 4.\n";
@@ -52,7 +55,7 @@ int main() {
 
     } while(choix != 0); // Répéter le menu principal tant que l'utilisateur ne choisit pas de quitter
 
-    return 0;}
+    return 0;
     /** test de la classe date: **/
 
     /*date d(10,12,2001);
