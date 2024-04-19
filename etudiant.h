@@ -78,7 +78,7 @@ public:
 /*************(CES METHODES SONT REDEFINIES~surchagés)*********************/
 
     virtual void afficher()=0; //La classe etudiant est VIRTUELLE
-    virtual void saisir()=0;
+    virtual void saisir();
 
 
 /**************Surcharge des operateurs**************************/
