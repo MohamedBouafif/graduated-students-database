@@ -9,7 +9,6 @@ etudiant::etudiant(string nom,string prenom,string mail,string CIN,string matric
     this->mail=mail;
     this->CIN = CIN;
     this->matricule_E = matricule_E;
-    //this->moyenne = moyenne;
     this->travaille = travaille;
     if(travaille)
     {
@@ -38,12 +37,8 @@ etudiant::etudiant(const etudiant& e)
     CIN = e.CIN;
     matricule_E = e.matricule_E;
 
-    //moyenne = e.moyenne;
-
     travaille = e.travaille;
-    /** for(auto it = e.societes.begin(); it != e.societes.end(); ++it) {
-        societes.push_back(*it);
-    }**/
+
     for(int i = 0; i < (int)e.societes.size() ; i++)
     {
         societes.push_back(e.societes[i]);
@@ -64,19 +59,17 @@ void etudiant::afficher()
     cout<<"Mail: "<<mail<<endl;
     cout<<"CIN: "<<CIN<<endl;
     cout<<"Matricule de l'etudiant: "<<matricule_E<<endl;
-    //cout<<"La moyenne de l'etudiant durant ces 3 annees: \n"<<moyenne<<endl;
     if(travaille)
     {
         cout<<"L'etudiant travaille \n";
         cout<<"Il a travaille recamment dans ces entreprises: \n";
 
         sort(societes.begin(),societes.end());
+
         for(int i = 0; i < (int) societes.size() ;i++)
         {
             cout<<societes[i]<<"\t";
         }
-
-
         cout<<endl;
     }
     else cout<<"l'etudiant ne travaille pas encore \n";
@@ -165,8 +158,6 @@ bool etudiant::chercher_Societe(string societe)
             return 1;
         }
     }
-     // Boucle pour rechercher la société dans la liste societes en utilisant un itérateur
-
     cout<<"Societe non trouvee\n";
     return 0;
 }
@@ -204,30 +195,31 @@ ostream& operator<< (ostream& out, etudiant& etd)
     out<<"Mail: "<<etd.mail<<endl;
     out<<"CIN: "<<etd.CIN<<endl;
     out<<"Matricule de l'etudiant: "<<etd.matricule_E<<endl;
-    //cout<<"La moyenne de l'etudiant durant ces 3 annees: \n"<<moyenne<<endl;
+
     if(etd.travaille)
     {
         out<<"L'etudiant travaille \n";
         out<<"Il a travaille recamment dans ces entreprises: \n";
 
-        sort(etd.societes.begin(),etd.societes.end());
+        sort(etd.societes.begin(),etd.societes.end());    //On a volu juste afficher les societes par ordre lexecographique
 
-
-        for(auto it = etd.societes.begin(); it != etd.societes.end(); ++it) {
-            cout << *it << "\t";
+        for(int i = 0; i < (int) etd.societes.size() ;i++)
+        {
+            out<<etd.societes[i]<<"\t";
         }
         out<<endl;
+
     }
     else out<<"l'etudiant ne travaille pas encore \n";
 
-    out<<"La date de naissance de letudiant est: \n";
-    out<<etd.date_de_naissance<<endl;
+    cout<<"La date de naissance de letudiant est: \n";
+    cout<<etd.date_de_naissance<<endl;
 
-    out<<"La date de debut d'etude: \n";
-    out<<etd.date_debut<<endl;
+    cout<<"La date de debut d'etude: \n";
+    cout<<etd.date_debut<<endl;
 
-    out<<"La date de fin d'etude: \n";
-    out<<etd.date_fin<<endl;
+    cout<<"La date de fin d'etude: \n";
+    cout<<etd.date_fin<<endl;
     return out;
 }
 
@@ -244,9 +236,6 @@ istream& operator>> (istream& in, etudiant& etd)
     in>>etd.CIN;
     cout<<"Matricule: ";
     in>>etd.matricule_E;
-    //cout<<"Moyenne: ";
-    //cin>>moyenne;
-
     cout<<"A il travaille ?\n1-OUI\t2-NON\n";
     char e;
     in>>e;
@@ -294,6 +283,10 @@ etudiant& etudiant::operator = (const etudiant& e)
         travaille = e.travaille;
         /**Supprimer le vecteur qui contients les societes de this   <=> supprimer ma partie dynamique de this**/
         societes.clear();
+        for(int i = 0; i < (int) e.societes.size(); i++)
+        {
+            societes.push_back(e.societes[i]);
+        }
 
         date_de_naissance = e.date_de_naissance;
         date_debut = e.date_debut;
