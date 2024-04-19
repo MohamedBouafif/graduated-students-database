@@ -101,3 +101,27 @@ ostream& operator << (ostream& out,pfe& p)
 }
 
 
+void pfe::saisir(etudiants es, string sujet)
+{
+    cout<<"Saisir les donnees de pfe selon l'ordre suivant:\n";
+    cout<<"Le field de sujet de pfe: "<<endl;
+    cin>>field;
+    cout<<"Entreprise de stage de pfe: "<<endl;
+    cin>>entreprise_stage_pfe;
+    cout<<"Note attribue a la pfe: "<<endl;
+    cin>>note_attribue;
+    this->Etudiants = es;
+    this->sujet_pfe = sujet;
+}
+pfe& pfe::operator = (const pfe& p)
+{
+    if(this!=&p)
+    {
+        sujet_pfe = p.sujet_pfe;
+        field = p.field;
+        entreprise_stage_pfe = p.entreprise_stage_pfe;
+        note_attribue = p.note_attribue;
+        Etudiants = p.Etudiants;
+    }
+    return *this;
+}
