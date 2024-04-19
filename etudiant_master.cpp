@@ -1,6 +1,5 @@
 #include "etudiant_master.h"
 
-
 etudiant_master :: etudiant_master(string filier_licence,float note_pfe_licence,string filiere_master,string nom,string prenom,string mail,string CIN,string matricule_E,bool travaille,int jn,int mn,int an,int jd,int md,int ad,int jf,int mf,int af):
     etudiant(nom,prenom,mail,CIN,matricule_E,travaille,jn,mn,an,jd,md,ad,jf,mf,af)
 
@@ -23,9 +22,12 @@ etudiant_master :: etudiant_master(const etudiant_master &e):etudiant(e)
     filiere_master = e.filiere_master;
     note_pfe_licence = e.note_pfe_licence;
 
-    for(int i = 0;i<(int)e.moyennes.size(); i++)
+    /**for(int i = 0;i<(int)e.moyennes.size(); i++)
     {
         moyennes.push_back(e.moyennes[i]);
+    }**/
+     for(auto it = e.moyennes.begin(); it != e.moyennes.end(); ++it) {
+            moyennes.push_back(*it);
     }
     moyenne_general = calcul_moyenne_general();
 }
@@ -33,13 +35,12 @@ etudiant_master :: etudiant_master(const etudiant_master &e):etudiant(e)
 
 etudiant_master::~etudiant_master()
 {
-    for(int i = 0;i < (int)moyennes.size(); i++)
+      for(int i = 0; i < (int)moyennes.size(); i++)
     {
-        delete &moyennes[i];
+        moyennes.erase(std::next(moyennes.begin(), i));
     }
-    /**le dernier boucle genere un erreur lors de COMPILATION **/
-
     moyennes.clear();
+
 }
 
 void etudiant_master:: saisir()
@@ -76,9 +77,12 @@ void etudiant_master::afficher()
     cout<<note_pfe_licence<<endl;
 
     cout<<"Moyennes durant ses annees detudes:\n";
-    for(int i = 0; i<(int)moyennes.size(); i++)
+    /**for(int i = 0; i<(int)moyennes.size(); i++)
     {
         cout<<moyennes[i]<<"\t";
+    }**/
+     for(auto it = moyennes.begin(); it != moyennes.end(); ++it) {
+        cout << *it << "\t";
     }
     cout<<endl;
     cout<<"Moyenne general de cycle = "<<moyenne_general<<endl;
@@ -88,9 +92,12 @@ void etudiant_master::afficher()
 float etudiant_master::calcul_moyenne_general()
 {
     float moyenne = 0;
-    for(int i = 0;i<(int)moyennes.size();i++)
+   /** for(int i = 0;i<(int)moyennes.size();i++)
     {
         moyenne += moyennes[i];
+    }**/
+    for(auto it = moyennes.begin(); it != moyennes.end(); ++it) {
+        moyenne += *it;
     }
     return moyenne/moyennes.size();
 }
@@ -107,9 +114,12 @@ ostream& operator<<(ostream& out, etudiant_master& etd)
     out<<etd.note_pfe_licence<<endl;
 
     out<<"Moyennes durant ses annees detudes:\n";
-    for(int i = 0; i<(int)etd.moyennes.size(); i++)
+    /**for(int i = 0; i<(int)etd.moyennes.size(); i++)
     {
         out<<etd.moyennes[i]<<"\t";
+    }**/
+    for(auto it = etd.moyennes.begin(); it != etd.moyennes.end(); ++it) {
+        out << *it << "\t";
     }
     out<<endl;
     out<<"Moyenne general de cycle = "<<etd.moyenne_general<<endl;
@@ -152,11 +162,12 @@ etudiant_master& etudiant_master:: operator = (const etudiant_master& w)
         /**Liberation des parties dynamiques**/
         for(int i = 0;i < (int)moyennes.size(); i++)
         {
-            delete &moyennes[i];
+            moyennes.erase(std::next(moyennes.begin(), i));
         }
         moyennes.clear();
-        for(int i = 0; i < (int)w.moyennes.size(); i++)
-            moyennes.push_back(w.moyennes[i]);
+
+        for ( auto it = w . moyennes . begin () ; it != w . moyennes . end() ; ++ it )
+            {moyennes . push_back (* it ) ; }
 
 
         /**Copie des parties statiques**/
@@ -169,9 +180,19 @@ etudiant_master& etudiant_master:: operator = (const etudiant_master& w)
     }
     return  *this;
 }
+
 bool etudiant_master::operator < (const etudiant_master& w)
 {
     return moyenne_general < w.moyenne_general;
+}
+
+/***********gestion des fichiers********************/
+void  etudiant_master::enregistrer ()
+{
+    ofstream fichier ("C:etudiants master.txt",ios::app);
+    if (!fichier)
+        cout << "erreur"<< endl ;
+    fichier <<*this ;
 }
 
 
