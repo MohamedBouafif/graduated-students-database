@@ -1,7 +1,7 @@
 #include"pfes.h"
 #include <set>
 #include "vector"
-
+#include <map>
 
 
 pfes::pfes(const pfes& p)
@@ -25,10 +25,8 @@ void pfes::afficher()
     {
         tab_pfe[i].afficher();
     }
-    cout<<endl;
+    //cout<<endl;
 }
-
-
 
 void pfes::remplir()
 {
@@ -52,72 +50,65 @@ void pfes::remplir()
 
 
 
-void pfes::remplir(etudiants etds)
-{
-    vector<etudiant*> v = etds.getab();
-    cout<<"Saisir les sujet de pfe des etudiants\n";
+void pfes::remplir(etudiants etds) {
+    vector<etudiant*> v = etds.gettab();
+    cout << "Saisir les sujets de PFE des étudiants\n";
 
-    vector<pair<string,etudiant*>> w;     //Ce vecteur contient le sujetde pfe de chaque etudiant
-    set <string> sujet;                            //cet ensemble contient les different sujet de pfe
+    vector<pair<string, etudiant*>> w; // Ce vecteur contient le sujet de PFE de chaque étudiant
+    set<string> sujet;                  // Cet ensemble contient les différents sujets de PFE
 
-    for(int i = 0; i < (int)v.size(); i++)
-    {
-        cout<<"PFE de :\n\t";
-        cout<<"Nom: "<<v[i]->getnom()<<"Prenom: "<<v[i]->getprenom();
-        cout<<"Identifiant: "<<v[i]->getmatricule_E()<<endl;
-        cout<<"Saisir le sujet de pfe\n";
+    for (int i = 0; i < (int)v.size(); i++) {
+        cout << "PFE de :\n\t";
+        cout << "Nom: " << v[i]->getnom() << "\tPrenom: " << v[i]->getprenom();
+        cout << "\tIdentifiant: " << v[i]->getmatricule_E() << endl;
+        cout << "Saisir le sujet de PFE\n";
         string s;
-        cin>>s;
+        cin >> s;
 
-        w.push_back({s,v[i]});
+        w.push_back({s, v[i]});
         sujet.insert(s);
     }
 
+    // Utilisation d'une map pour stocker les étudiants par sujet de PFE
+    map<string, etudiants> res; // Chaque élément de cette map contient un sujet et les étudiants qui ont réalisé ce sujet
 
-    vector<pair<string, etudiants>> res;   // chaque element de ce vecteur contient un tuple de
-                                            // sujet et les etudiants qui ont realiser ce sujet
-
-    // jaurait pu utiliser un map mais ce nest pas necessaire car elle gaspille de la memoire sans besoin (j'ai pas besoin doptimiser la complexité temporelle ici)
-    for(auto it = sujet.begin();it!=sujet.end(); it++)
-    {
-
-        //pour chaque sujet on cherche les etudiants qui ont realiser ce sujet
+    for (auto it = sujet.begin(); it != sujet.end(); it++) {
+        // Pour chaque sujet, on cherche les étudiants qui ont réalisé ce sujet
         etudiants etds;
-        for(int i =0;i<(int)w.size();i++)
-        {
-            if(*it==w[i].first)
-            {
-                etds.ajouter(w[i].second,etds.taille());
+        for (int i = 0; i < (int)w.size(); i++) {
+            if (*it == w[i].first) {
+                etds.ajouter(w[i].second, etds.taille());
             }
-
         }
-        res.push_back({*it,etds});
+        res[*it] = etds; // Stocker les étudiants dans la map avec le sujet comme clé
     }
 
-    int nb_sujet = sujet.size();
-    /*cout<<"taille resultat = "<<res.size()<<endl;
-    cout<<"nb sujet = "<<nb_sujet<<endl;*/
-    for(int i = 0; i < nb_sujet; i++)
-    {
-        string sujet_pfe = res[i].first;
-        etudiants etds  = res[i].second;
-        cout<<"Saisir les donnes de pfe de sujet: "<<sujet_pfe<<endl;
-        cout<<"Field de sujet de pfe: "<<endl;
-        string f;
-        cin>>f;
+    // Saisie des données de PFE pour chaque sujet
+    for (auto it = res.begin(); it != res.end(); it++) {
+        string sujet_pfe = it->first;
+        etudiants etds = it->second;
 
-        cout<<"L'entreprise de pfe: "<<endl;
+        cout << "Saisir les données de PFE de sujet: " << sujet_pfe << endl;
+        cout << "Field de sujet de PFE: " << endl;
+        string f;
+        cin >> f;
+
+        cout << "L'entreprise de PFE: " << endl;
         string entreprise;
-        cin>>entreprise;
+        cin >> entreprise;
 
         float n;
-        cout<<"Saisir la note: "<<endl;
-        cin>>n;
-        pfe p(etds, sujet_pfe,f, entreprise,n); // creation de notre pfe
-        //cout<<p<<endl;
-        this->ajouter(p,this->taille()); // linsetion se fait avec succes
+        cout << "Saisir la note: " << endl;
+        cin >> n;
+        pfe p(etds, sujet_pfe, f, entreprise, n); // création de notre PFE
+        cout << "PFE: " << p << endl;
+        this->ajouter(p, this->taille()); // Insertion réussie
     }
+
+    cout << "Nombre de PFE: " << this->taille() << endl;
+    this->afficher();
 }
+
 
 int pfes::taille()
 {
@@ -144,31 +135,37 @@ void pfes::supprimer(int ind)
        cout<<"Suppression avec succes\n";
     }
     else cout<<"position inexistante!"<<endl;
-
 }
-void pfes::enregistrer()
+
+pfes& pfes::operator = (const pfes& ps)
 {
-     ofstream fichier ("c:pfes.txt",ios::app);
-    if (!fichier)
-        cout << "erreur"<<endl ;
-    fichier<<*this ;
-    fichier.close();
+    if(this != &ps)
+    {
+        /**Liberation de la partie dynamique**/
+        for(int i = 0; i <(int) tab_pfe.size(); i++)
+        {
+            delete &tab_pfe[i];
+        }
+        tab_pfe.clear();
 
+        /**Copie**/
+        for(int i  = 0; i<(int)ps.tab_pfe.size();i++)
+            tab_pfe.push_back(ps.tab_pfe[i]);
+    }
+    return *this;
 }
-/*********************surcharge des operateurs ***********************/
- ostream& operator<<(ostream& out,pfes& p)
- {
-        out<<"Affichage des PFE: \n";
+ostream& operator<<(ostream& out,pfes& p)
+{
+    out<<"Affichage des PFE: \n";
     for(int i = 0; i <(int)p.tab_pfe.size();i++)
     {
-       out << p.tab_pfe[i];
+        p.tab_pfe[i].afficher();
     }
-    cout<<endl;
     return out;
- }
- istream& operator>>(istream& in,pfes& p)
- {
-     char rep;
+}
+istream& operator>>(istream& in,pfes& p)
+{
+    char rep;
 
     cout<<"\nAjouter pfe:\n";
     do
@@ -183,4 +180,4 @@ void pfes::enregistrer()
     }
     while(rep=='1');
     return in;
- }
+}
