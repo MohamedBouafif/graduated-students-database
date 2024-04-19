@@ -125,7 +125,14 @@ void pfes::ajouter(pfe p,int ind)
     }
     else cout<<"Impossible dajouter la pfe a la position desiree"<<endl;
 }
-
+void pfes::enregistrer()
+{
+     ofstream fichier ("c:pfes.txt",ios::app);
+    if (!fichier)
+        cout << "erreur"<<endl ;
+    fichier<<*this ;
+    fichier.close();
+}
 
 void pfes::supprimer(int ind)
 {
