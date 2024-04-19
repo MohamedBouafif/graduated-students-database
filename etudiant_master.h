@@ -1,18 +1,16 @@
 #ifndef ETUDIANT_MASTER_H_INCLUDED
 #define ETUDIANT_MASTER_H_INCLUDED
-
+#include<fstream>
 #include"etudiant.h"
 
 
 class etudiant_master : public etudiant
 {
     friend class entreprise;
-
-
     string filiere_licence;
     float note_pfe_licence;
     string filiere_master;
-    vector<float> moyennes;   //durant ces annees detudes
+    list<float> moyennes;   //durant ces annees detudes
     float moyenne_general;
 
 
@@ -49,6 +47,8 @@ public:
     etudiant_master& operator = (const etudiant_master&);
 
     bool operator < (const etudiant_master&); // tri dans lordre croissant selon le caractere : moyenne general
+/*******************gestion de fichier************************/
+void enregistrer ( );
 
 
 };
